@@ -2,4 +2,6 @@
 
 import { LobbyCtrl } from './lobby.ctrl.js';
 
-export { LobbyCtrl };
+let ctrl = LobbyCtrl;
+
+export { ctrl };
