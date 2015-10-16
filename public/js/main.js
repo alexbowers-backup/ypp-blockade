@@ -38151,14 +38151,28 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Form = function Form() {
-    _classCallCheck(this, Form);
+var Form = (function () {
+    function Form() {
+        _classCallCheck(this, Form);
 
-    this.fields = {};
-    this.properties = {};
-};
+        this.fields = {};
+        this.properties = {};
+        this.messages = [];
+    }
+
+    _createClass(Form, [{
+        key: "resetMessages",
+        value: function resetMessages() {
+            this.messages = [];
+        }
+    }]);
+
+    return Form;
+})();
 
 exports.Form = Form;
 
@@ -38176,6 +38190,8 @@ var _userUserClassJs = require('../user/user.class.js');
 
 var _formFormClassJs = require('../form/form.class.js');
 
+var _messageMessageClassJs = require('../message/message.class.js');
+
 var LobbyCtrl = (function () {
     function LobbyCtrl($location) {
         _classCallCheck(this, LobbyCtrl);
@@ -38183,7 +38199,12 @@ var LobbyCtrl = (function () {
         this.$location = $location;
 
         this.User = new _userUserClassJs.User();
-        this.Form = new _formFormClassJs.Form();
+        this.LoginForm = new _formFormClassJs.Form();
+
+        this.LoginForm.messages.push(new _messageMessageClassJs.Message({
+            text: 'This is an error message',
+            type: 'danger'
+        }));
 
         this.init();
     }
@@ -38195,14 +38216,12 @@ var LobbyCtrl = (function () {
             var joiningGame = this.$location.search().game || false;
 
             if (joiningGame) {
-                this.Form.fields.gameid = joiningGame;
+                this.LoginForm.fields.gameid = joiningGame;
             }
         }
     }, {
         key: 'createGame',
-        value: function createGame() {
-            console.log('Console');
-        }
+        value: function createGame() {}
     }, {
         key: 'joinGame',
         value: function joinGame() {}
@@ -38215,7 +38234,7 @@ LobbyCtrl.$inject = ['$location'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":5,"../user/user.class.js":8}],7:[function(require,module,exports){
+},{"../form/form.class.js":5,"../message/message.class.js":8,"../user/user.class.js":9}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -38229,6 +38248,25 @@ var ctrl = _lobbyCtrlJs.LobbyCtrl;
 exports.ctrl = ctrl;
 
 },{"./lobby.ctrl.js":6}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Message = function Message(object) {
+    _classCallCheck(this, Message);
+
+    object = object || {};
+    this.type = object.type || null;
+    this.text = object.text || null;
+};
+
+exports.Message = Message;
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

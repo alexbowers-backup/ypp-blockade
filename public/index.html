@@ -12,8 +12,13 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="/styles/main.min.css" rel="stylesheet"/>
     <base href="/"/>
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
 </head>
-<body ng-app="CadeSim" class="background-primary">
+<body ng-app="CadeSim" class="background-primary" ng-cloak>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container full-bleed padding-0">
@@ -41,10 +46,10 @@
             <div class="col-xs-12 text-center">
                 <h3>The YPP Blockade Simulator</h3>
 
-                <div class="row">
-                    <div class="col-xs-6 col-xs-offset-3">
-                        <div class="alert alert-danger">
-                            <strong>Sorry!</strong> There was something wrong.
+                <div class="row" ng-show="lobby.LoginForm.messages.length > 0">
+                    <div class="col-xs-6 col-xs-offset-3" ng-repeat="message in lobby.LoginForm.messages">
+                        <div class="alert alert-{{ message.type }}">
+                            {{ message.text }}
                         </div>
                     </div>
                 </div>
@@ -56,7 +61,7 @@
 
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" id="username"
-                                       ng-model="lobby.Form.fields.username">
+                                       ng-model="lobby.LoginForm.fields.username">
                             </div>
                         </div>
 
@@ -67,7 +72,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">#</span>
                                     <input type="text" class="form-control" id="game_id"
-                                           ng-model="lobby.Form.fields.gameid">
+                                           ng-model="lobby.LoginForm.fields.gameid">
                                 </div>
                             </div>
                         </div>
@@ -76,11 +81,11 @@
 
                 <div class="row push-up-lg">
                     <button type="button" class="btn btn-default" ng-click="lobby.createGame()"
-                            ng-disabled="!lobby.Form.fields.username || lobby.Form.fields.gameid">
+                            ng-disabled="!lobby.LoginForm.fields.username || lobby.LoginForm.fields.gameid">
                         Create a game
                     </button>
                     <button type="button" class="btn btn-default"
-                            ng-disabled="!lobby.Form.fields.gameid || !lobby.Form.fields.username">
+                            ng-disabled="!lobby.LoginForm.fields.gameid || !lobby.LoginForm.fields.username">
                         Join a game
                     </button>
                 </div>
