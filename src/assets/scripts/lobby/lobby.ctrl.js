@@ -1,23 +1,19 @@
 'use strict';
+
 import { User } from '../user/user.class.js';
 import { Form } from '../form/form.class.js';
 import { Message } from '../message/message.class.js';
 import { Socket } from '../socket/socket.class.js';
 
 class LobbyCtrl {
-    constructor($location) {
+    constructor($location, $rootScope) {
         this.$location = $location;
+        this.$rootScope = $rootScope;
 
         this.User = new User;
         this.LoginForm = new Form;
 
-        this.LoginForm.messages.push(new Message({
-            text: 'This is an error message',
-            type: 'danger'
-        }));
-
-        this.socket= (new Socket()).socket;
-
+        this.socket = new Socket();
         this.init();
     }
 
@@ -31,7 +27,17 @@ class LobbyCtrl {
     }
 
     createGame() {
-        this.socket.emit('create', this.LoginForm.fields.username);
+            this.socket = new Socket({forceNew: true});
+
+            this.LoginForm.messages = [];
+
+            this.socket.emit('create', this.LoginForm.fields.username);
+
+            this.socket.on('login error', (response) => {
+                this.$rootScope.$apply(() => {
+                    this.LoginForm.messages.push(new Message(response));
+                });
+            });
     }
 
     joinGame() {
@@ -39,6 +45,6 @@ class LobbyCtrl {
     }
 }
 
-LobbyCtrl.$inject = ['$location'];
+LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 export { LobbyCtrl }

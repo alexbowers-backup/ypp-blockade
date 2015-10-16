@@ -4,10 +4,6 @@ class Form {
         this.properties = {};
         this.messages = [];
     }
-
-    resetMessages() {
-        this.messages = [];
-    }
 }
 
 export { Form };

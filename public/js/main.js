@@ -45136,33 +45136,21 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Form = (function () {
-    function Form() {
-        _classCallCheck(this, Form);
+var Form = function Form() {
+    _classCallCheck(this, Form);
 
-        this.fields = {};
-        this.properties = {};
-        this.messages = [];
-    }
-
-    _createClass(Form, [{
-        key: "resetMessages",
-        value: function resetMessages() {
-            this.messages = [];
-        }
-    }]);
-
-    return Form;
-})();
+    this.fields = {};
+    this.properties = {};
+    this.messages = [];
+};
 
 exports.Form = Form;
 
 },{}],54:[function(require,module,exports){
 'use strict';
+
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
@@ -45180,21 +45168,16 @@ var _messageMessageClassJs = require('../message/message.class.js');
 var _socketSocketClassJs = require('../socket/socket.class.js');
 
 var LobbyCtrl = (function () {
-    function LobbyCtrl($location) {
+    function LobbyCtrl($location, $rootScope) {
         _classCallCheck(this, LobbyCtrl);
 
         this.$location = $location;
+        this.$rootScope = $rootScope;
 
         this.User = new _userUserClassJs.User();
         this.LoginForm = new _formFormClassJs.Form();
 
-        this.LoginForm.messages.push(new _messageMessageClassJs.Message({
-            text: 'This is an error message',
-            type: 'danger'
-        }));
-
-        this.socket = new _socketSocketClassJs.Socket().socket;
-
+        this.socket = new _socketSocketClassJs.Socket();
         this.init();
     }
 
@@ -45211,7 +45194,19 @@ var LobbyCtrl = (function () {
     }, {
         key: 'createGame',
         value: function createGame() {
+            var _this = this;
+
+            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
+
+            this.LoginForm.messages = [];
+
             this.socket.emit('create', this.LoginForm.fields.username);
+
+            this.socket.on('login error', function (response) {
+                _this.$rootScope.$apply(function () {
+                    _this.LoginForm.messages.push(new _messageMessageClassJs.Message(response));
+                });
+            });
         }
     }, {
         key: 'joinGame',
@@ -45221,7 +45216,7 @@ var LobbyCtrl = (function () {
     return LobbyCtrl;
 })();
 
-LobbyCtrl.$inject = ['$location'];
+LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
@@ -45272,10 +45267,18 @@ var _socketIoClient = require('socket.io-client');
 
 var _socketIoClient2 = _interopRequireDefault(_socketIoClient);
 
-var Socket = function Socket() {
+var Socket = function Socket(options) {
     _classCallCheck(this, Socket);
 
-    this.socket = _socketIoClient2['default'].connect('http://localhost:4000');
+    options = options || null;
+
+    if (options) {
+        this.socket = _socketIoClient2['default'].connect('http://localhost:4000', options);
+    } else {
+        this.socket = _socketIoClient2['default'].connect('http://localhost:4000');
+    }
+
+    return this.socket;
 };
 
 exports.Socket = Socket;
