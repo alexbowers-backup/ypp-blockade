@@ -16,7 +16,7 @@ class LobbyCtrl {
             type: 'danger'
         }));
 
-        this.socket = new Socket;
+        this.socket= (new Socket()).socket;
 
         this.init();
     }
@@ -31,7 +31,7 @@ class LobbyCtrl {
     }
 
     createGame() {
-
+        this.socket.emit('create', this.LoginForm.fields.username);
     }
 
     joinGame() {

@@ -45193,7 +45193,7 @@ var LobbyCtrl = (function () {
             type: 'danger'
         }));
 
-        this.socket = new _socketSocketClassJs.Socket();
+        this.socket = new _socketSocketClassJs.Socket().socket;
 
         this.init();
     }
@@ -45210,7 +45210,9 @@ var LobbyCtrl = (function () {
         }
     }, {
         key: 'createGame',
-        value: function createGame() {}
+        value: function createGame() {
+            this.socket.emit('create', this.LoginForm.fields.username);
+        }
     }, {
         key: 'joinGame',
         value: function joinGame() {}

@@ -8,6 +8,9 @@ var io = socket.listen(app.listen(port));
 
 app.use(express.static(__dirname + '/public'));
 
-io.sockets.on('connection', function() {
-    console.log('New connection');
+io.rooms = {};
+io.sockets.on('connection', function(client) {
+    client.on('create', function(username) {
+        console.log(username);
+    });
 });
