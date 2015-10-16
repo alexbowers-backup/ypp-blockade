@@ -37,4 +37,4 @@ gulp.task('watch', function() {
     gulp.watch('src/assets/sass/**/*.scss', ['styles']);
 });
 
-gulp.task('default', ['browserify', 'styles','connect', 'watch']);
+gulp.task('default', ['browserify', 'styles', 'watch']);
