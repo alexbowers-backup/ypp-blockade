@@ -1,0 +1,9 @@
+.img-responsive {
+  &.stretch {
+    width: 100% !important;
+  }
+}
+
+.img-rounded-slightly {
+  border-radius: $border-radius-base;
+}

@@ -1,0 +1,10 @@
+html {
+  .display-touch-only {
+    display: none;
+  }
+  &.touch {
+    .display-touch-only {
+      display: inline-block;
+    }
+  }
+}

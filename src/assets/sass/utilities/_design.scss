@@ -1,0 +1,15 @@
+.border-bottom {
+  border-bottom: 1px solid $gray-light;
+}
+
+.border-left {
+  border-left: 1px solid $gray-light;
+}
+
+.no-pointer {
+  cursor: default !important;
+}
+
+.background-primary {
+  background-color: $brand-primary;
+}

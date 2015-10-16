@@ -1,0 +1,35 @@
+.slide {
+  &.primary {
+    background-color: $brand-primary;
+    min-height: 300px;
+  }
+}
+
+.demo {
+  .title {
+
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .live-preview {
+
+  }
+
+  .code {
+    background-color: $gray-lighter;
+    padding: 20px;
+    code {
+      background: none;
+      color: $gray;
+      font-size: 16px;
+    }
+  }
+}
+
+.full-bleed {
+  width: 100%;
+}

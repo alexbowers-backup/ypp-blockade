@@ -1,0 +1,20 @@
+@media screen and (max-width: $screen-sm-max) {
+  .btn-block-screens {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  .btn-block-xs {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .btn-block-sm {
+    display: block;
+    width: 100%;
+  }
+}

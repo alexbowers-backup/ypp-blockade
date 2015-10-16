@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+<head>
+    <title>YPP Blockade Simulator</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700,300italic,400italic,700italic'
+          rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="/styles/main.min.css" rel="stylesheet"/>
+    <script src="js/main.js"></script>
+</head>
+<body class="background-primary">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container full-bleed padding-0">
+        <div class="navbar-header padding-left-50">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href>Cade sim</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse padding-right-50">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href>Github</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="slide primary margin-top-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h3>The YPP Blockade Simulator</h3>
+
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <div class="alert alert-danger">
+                            <strong>Sorry!</strong> There was something wrong.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row push-up-lg">
+                    <div class="col-xs-4 col-xs-offset-4">
+                        <div class="form-group">
+                            <label for="username" class="col-xs-3">Name</label>
+
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                        </div>
+
+                        <div class="form-group push-up-lg">
+                            <label for="game_id" class="col-xs-3">Game id</label>
+
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">#</span>
+                                    <input type="text" class="form-control" id="game_id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row push-up-lg">
+                    <button type="button" class="btn btn-default">Create a game</button>
+                    <button type="button" class="btn btn-default">Join a game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h3>Pirate Name - Room #<a href title="Click to Copy">150920 <i class="ion-ios-copy-outline"></i></a>
+                </h3>
+
+                <div class="row">
+                    <div class="col-xs-10">
+                        <canvas id="game"></canvas>
+                    </div>
+
+                    <div class="col-xs-2">
+                        <div class="counter">
+                            <div class="rounds">
+                                <h2>Round: 1/5</h2>
+                            </div>
+                            <div class="timer">
+                                <h2>0:30</h2>
+                            </div>
+                        </div>
+
+                        <div class="messages">
+                            <div class="message">The game is over!</div>
+                            <div class="message">Your team won!</div>
+                            <div class="message">Your team lost!</div>
+                        </div>
+
+                        <div class="teams">
+                            <h4 class="text-center">Teams</h4>
+
+                            <div class="team">
+                                Team 1: 0
+                            </div>
+                            <div class="team">
+                                Team 2: 0
+                            </div>
+                        </div>
+
+                        <div class="players">
+                            <h4 class="text-center">Players</h4>
+
+                            <div class="player">
+                                Name
+                            </div>
+                            <div class="player">
+                                Name 2
+                            </div>
+                        </div>
+
+                        <div class="lobby-controls push-down-lg">
+                            <h4 class="text-center">Lobby Controls</h4>
+
+                            <p>You are the game master</p>
+
+                            <div class="control">
+                                <button type="button" class="btn btn-success">Start Game</button>
+                            </div>
+                            <div class="control push-up-sm">
+                                <button type="button" class="btn btn-danger">Leave Game</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row push-down-lg">
+                    <div class="col-xs-2 col-xs-offset-3">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Moves</h4>
+
+                                <div class="moves">
+                                    <div class="move">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-up"></i>
+                                                <i class="ion-arrow-up-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="move">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-up"></i>
+                                                <i class="ion-arrow-up-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="move">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-up"></i>
+                                                <i class="ion-arrow-up-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="move">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-up"></i>
+                                                <i class="ion-arrow-up-c"></i>
+                                            </span>
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Cannons</h4>
+
+                                <div class="cannons">
+                                    <div class="cannon">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="cannon">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="cannon">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="cannon">
+                                        <div class="options">
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-left"></i>
+                                                <i class="ion-arrow-left-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-close-outline"></i>
+                                                <i class="ion-ios-close"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+
+                                            <span class="option">
+                                                <i class="ion-ios-arrow-thin-right"></i>
+                                                <i class="ion-arrow-right-c"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

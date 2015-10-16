@@ -1,0 +1,30 @@
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.vertical-align-top {
+  vertical-align: top;
+}
+
+.pull-right {
+  &.center-xs {
+    float: none;
+  }
+}
+
+.bring-it-forward {
+  z-index: 999;
+}
+
+@media screen and (max-width: $screen-sm-max) {
+  .center-on-screens {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+  }
+}

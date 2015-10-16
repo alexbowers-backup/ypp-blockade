@@ -1,0 +1,27 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: $text-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  color: $text-color;
+}
+
+.font-light {
+  color: $white;
+}
+
+.main-headline {
+  font-size: 72px;
+  margin-top: 150px;
+}
+
+a {
+  color: white;
+  &:hover {
+    color: darken(white, 15%);
+    text-decoration: none;
+  }
+}
