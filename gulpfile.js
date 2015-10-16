@@ -32,7 +32,7 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('public/styles'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch('src/assets/scripts/**/*.js', ['browserify']);
     gulp.watch('src/assets/sass/**/*.scss', ['styles']);
 });

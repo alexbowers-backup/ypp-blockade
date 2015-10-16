@@ -21,23 +21,23 @@ class LobbyCtrl {
         this.stage = 1;
         var joiningGame = this.$location.search().game || false;
 
-        if(joiningGame) {
+        if (joiningGame) {
             this.LoginForm.fields.gameid = joiningGame;
         }
     }
 
     createGame() {
-            this.socket = new Socket({forceNew: true});
+        this.socket = new Socket({forceNew: true});
 
-            this.LoginForm.messages = [];
+        this.LoginForm.messages = [];
 
-            this.socket.emit('create', this.LoginForm.fields.username);
+        this.socket.emit('create', this.LoginForm.fields.username);
 
-            this.socket.on('login error', (response) => {
-                this.$rootScope.$apply(() => {
-                    this.LoginForm.messages.push(new Message(response));
-                });
+        this.socket.on('login error', (response) => {
+            this.$rootScope.$apply(() => {
+                this.LoginForm.messages.push(new Message(response));
             });
+        });
     }
 
     joinGame() {
