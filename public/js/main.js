@@ -45167,6 +45167,8 @@ var _messageMessageClassJs = require('../message/message.class.js');
 
 var _socketSocketClassJs = require('../socket/socket.class.js');
 
+var _roomRoomClassJs = require('../room/room.class.js');
+
 var LobbyCtrl = (function () {
     function LobbyCtrl($location, $rootScope) {
         _classCallCheck(this, LobbyCtrl);
@@ -45176,6 +45178,7 @@ var LobbyCtrl = (function () {
 
         this.User = new _userUserClassJs.User();
         this.LoginForm = new _formFormClassJs.Form();
+        this.Room = new _roomRoomClassJs.Room();
 
         this.socket = new _socketSocketClassJs.Socket();
         this.init();
@@ -45198,6 +45201,8 @@ var LobbyCtrl = (function () {
 
             this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
 
+            this.LoginForm.properties.inProgress = true;
+
             this.LoginForm.messages = [];
 
             this.socket.emit('create', this.LoginForm.fields.username);
@@ -45205,12 +45210,42 @@ var LobbyCtrl = (function () {
             this.socket.on('login error', function (response) {
                 _this.$rootScope.$apply(function () {
                     _this.LoginForm.messages.push(new _messageMessageClassJs.Message(response));
+                    _this.LoginForm.properties.inProgress = false;
                 });
             });
+
+            this.socket.on('login', function (data) {
+                _this.$rootScope.$apply(function () {
+                    _this.Room = {
+                        users: data.users,
+                        user: data.user,
+                        id: data.gameID
+                    };
+
+                    _this.$location.search('game', data.gameID);
+
+                    _this.stage = 2;
+                    _this.LoginForm.properties.inProgress = false;
+                });
+            });
+
+            //this.login();
         }
     }, {
         key: 'joinGame',
-        value: function joinGame() {}
+        value: function joinGame() {
+
+            //this.login();
+        }
+    }, {
+        key: 'login',
+        value: function login() {
+            var _this2 = this;
+
+            this.socket.on('login', function (data) {
+                console.log(_this2.Room);
+            });
+        }
     }]);
 
     return LobbyCtrl;
@@ -45220,7 +45255,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":53,"../message/message.class.js":56,"../socket/socket.class.js":57,"../user/user.class.js":58}],55:[function(require,module,exports){
+},{"../form/form.class.js":53,"../message/message.class.js":56,"../room/room.class.js":57,"../socket/socket.class.js":58,"../user/user.class.js":59}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45253,6 +45288,27 @@ var Message = function Message(object) {
 exports.Message = Message;
 
 },{}],57:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Room = function Room() {
+    _classCallCheck(this, Room);
+
+    this.users = null;
+    this.user = null;
+    this.master = null;
+    this.isMaster = false;
+    this.id = null;
+};
+
+exports.Room = Room;
+
+},{}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45283,7 +45339,7 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],58:[function(require,module,exports){
+},{"socket.io-client":4}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
