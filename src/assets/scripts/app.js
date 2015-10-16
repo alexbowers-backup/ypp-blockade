@@ -1,5 +1,6 @@
 import jquery from 'jquery';
 import angular from 'angular';
+
 import * as LobbyModule from './lobby/lobby.module';
 
 angular.module('CadeSim', [])

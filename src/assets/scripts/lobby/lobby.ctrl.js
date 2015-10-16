@@ -2,6 +2,7 @@
 import { User } from '../user/user.class.js';
 import { Form } from '../form/form.class.js';
 import { Message } from '../message/message.class.js';
+import { Socket } from '../socket/socket.class.js';
 
 class LobbyCtrl {
     constructor($location) {
@@ -14,6 +15,8 @@ class LobbyCtrl {
             text: 'This is an error message',
             type: 'danger'
         }));
+
+        this.socket = new Socket;
 
         this.init();
     }
