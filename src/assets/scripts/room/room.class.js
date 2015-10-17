@@ -3,8 +3,11 @@ class Room {
         this.users = null;
         this.user = null;
         this.master = null;
-        this.isMaster = false;
         this.id = null;
+    }
+
+    isMaster() {
+        return this.master === this.user;
     }
 }
 

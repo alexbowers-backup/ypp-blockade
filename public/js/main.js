@@ -45228,22 +45228,28 @@ var LobbyCtrl = (function () {
                     _this.LoginForm.properties.inProgress = false;
                 });
             });
-
-            //this.login();
         }
     }, {
         key: 'joinGame',
         value: function joinGame() {
-
-            //this.login();
-        }
-    }, {
-        key: 'login',
-        value: function login() {
             var _this2 = this;
 
-            this.socket.on('login', function (data) {
-                console.log(_this2.Room);
+            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
+
+            this.LoginForm.properties.inProgress = true;
+
+            this.LoginForm.messages = [];
+
+            this.socket.emit('join', {
+                username: this.LoginForm.fields.username,
+                gameID: this.LoginForm.fields.gameid
+            });
+
+            this.socket.on('login error', function (response) {
+                _this2.$rootScope.$apply(function () {
+                    _this2.LoginForm.messages.push(new _messageMessageClassJs.Message(response));
+                    _this2.LoginForm.properties.inProgress = false;
+                });
             });
         }
     }]);
@@ -45294,17 +45300,29 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Room = function Room() {
-    _classCallCheck(this, Room);
+var Room = (function () {
+    function Room() {
+        _classCallCheck(this, Room);
 
-    this.users = null;
-    this.user = null;
-    this.master = null;
-    this.isMaster = false;
-    this.id = null;
-};
+        this.users = null;
+        this.user = null;
+        this.master = null;
+        this.id = null;
+    }
+
+    _createClass(Room, [{
+        key: "isMaster",
+        value: function isMaster() {
+            return this.master === this.user;
+        }
+    }]);
+
+    return Room;
+})();
 
 exports.Room = Room;
 

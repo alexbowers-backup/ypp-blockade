@@ -26,6 +26,11 @@ io.sockets.on('connection', function (client) {
         }
 
         client.gameID = createRoom();
+        client.joinRoom({
+            gameID: client.gameID,
+            username: username
+        });
+
         room = io.rooms[client.gameID];
         client.username = username;
         room.users.push(username);
@@ -36,16 +41,69 @@ io.sockets.on('connection', function (client) {
             gameID: client.gameID
         });
     });
+
+    client.joinRoom = function (data) {
+        var room = io.rooms[data.gameID];
+
+        if(room === undefined) {
+            client.emit('login error', {
+                type: 'danger',
+                text: 'This game no longer exists'
+            });
+
+            return client.disconnect();
+        }
+
+        if (!/^[0-9]{8}$/.test(data.gameID)) {
+            client.emit('login error', {
+                type: 'danger',
+                text: 'Your gameID is incorrect'
+            });
+
+            return client.disconnect();
+        }
+
+        if (!/^(?=.{4,12}$)[A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*$/.test(data.username) || data.username === null) {
+            client.emit('login error', {
+                type: 'danger',
+                text: 'Your username is not valid'
+            });
+
+            return client.disconnect();
+        }
+
+        if (room.users.indexOf(data.username) !== -1) {
+            client.emit('login error', {
+                type: 'danger',
+                text: 'This username is already taken'
+            });
+
+            return client.disconnect();
+        }
+
+        if (room.isStarted) {
+            client.emit('login error', {
+                type: 'danger',
+                text: 'The game has already started'
+            });
+
+            return client.disconnect();
+        }
+    };
+
+    client.on('join', function (data) {
+        return client.joinRoom(data);
+    });
 });
 
 function createRoom() {
     var gameId = '';
 
-    for( var i = 0; i < 8; i++) {
+    for (var i = 0; i < 8; i++) {
         gameId += Math.floor(Math.random() * 10);
     }
 
-    if( io.rooms[gameId] === undefined) {
+    if (io.rooms[gameId] === undefined) {
         io.rooms[gameId] = {
             users: []
         };

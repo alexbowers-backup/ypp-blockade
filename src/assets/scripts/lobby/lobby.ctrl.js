@@ -58,19 +58,25 @@ class LobbyCtrl {
                 this.LoginForm.properties.inProgress = false;
             });
         });
-
-        //this.login();
     }
 
     joinGame() {
+        this.socket = new Socket({forceNew: true});
 
+        this.LoginForm.properties.inProgress = true;
 
-        //this.login();
-    }
+        this.LoginForm.messages = [];
 
-    login() {
-        this.socket.on('login', (data) => {
-            console.log(this.Room);
+        this.socket.emit('join', {
+            username: this.LoginForm.fields.username,
+            gameID: this.LoginForm.fields.gameid
+        });
+
+        this.socket.on('login error', (response) => {
+            this.$rootScope.$apply(() => {
+                this.LoginForm.messages.push(new Message(response));
+                this.LoginForm.properties.inProgress = false;
+            });
         });
     }
 }

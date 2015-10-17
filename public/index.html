@@ -88,7 +88,7 @@
                             ng-disabled="!lobby.LoginForm.fields.username || lobby.LoginForm.fields.gameid || lobby.LoginForm.properties.inProgress">
                         Create a game
                     </button>
-                    <button type="button" class="btn btn-default"
+                    <button type="button" class="btn btn-default" ng-click="lobby.joinGame()"
                             ng-disabled="!lobby.LoginForm.fields.gameid || !lobby.LoginForm.fields.username || lobby.LoginForm.properties.inProgress">
                         Join a game
                     </button>
