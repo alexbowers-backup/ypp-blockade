@@ -32,7 +32,7 @@ io.sockets.on('connection', function (client) {
             username: username
         });
 
-        client.broadcast.emit('connected user', data.username);
+        client.broadcast.emit('connected user', username);
     });
 
     client.joinRoom = function (data) {
