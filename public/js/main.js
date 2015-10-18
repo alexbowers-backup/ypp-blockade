@@ -45129,7 +45129,7 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"./lobby/lobby.module":55,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"./lobby/lobby.module":56,"angular":2,"jquery":3}],53:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45149,6 +45149,23 @@ var Form = function Form() {
 exports.Form = Form;
 
 },{}],54:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Game = function Game() {
+    _classCallCheck(this, Game);
+
+    this.started = false;
+};
+
+exports.Game = Game;
+
+},{}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45279,7 +45296,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":53,"../message/message.class.js":56,"../room/room.class.js":57,"../socket/socket.class.js":58,"../user/user.class.js":59}],55:[function(require,module,exports){
+},{"../form/form.class.js":53,"../message/message.class.js":57,"../room/room.class.js":58,"../socket/socket.class.js":59,"../user/user.class.js":60}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45292,7 +45309,7 @@ var ctrl = _lobbyCtrlJs.LobbyCtrl;
 
 exports.ctrl = ctrl;
 
-},{"./lobby.ctrl.js":54}],56:[function(require,module,exports){
+},{"./lobby.ctrl.js":55}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45311,16 +45328,18 @@ var Message = function Message(object) {
 
 exports.Message = Message;
 
-},{}],57:[function(require,module,exports){
-"use strict";
+},{}],58:[function(require,module,exports){
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _gameGameClassJs = require('../game/game.class.js');
 
 var Room = (function () {
     function Room() {
@@ -45330,10 +45349,11 @@ var Room = (function () {
         this.user = null;
         this.master = null;
         this.id = null;
+        this.Game = new _gameGameClassJs.Game();
     }
 
     _createClass(Room, [{
-        key: "isMaster",
+        key: 'isMaster',
         value: function isMaster() {
             return this.master === this.user;
         }
@@ -45344,7 +45364,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{}],58:[function(require,module,exports){
+},{"../game/game.class.js":54}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45375,7 +45395,7 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],59:[function(require,module,exports){
+},{"socket.io-client":4}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
