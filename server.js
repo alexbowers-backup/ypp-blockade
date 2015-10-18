@@ -31,6 +31,8 @@ io.sockets.on('connection', function (client) {
             gameID: client.gameID,
             username: username
         });
+
+        client.broadcast.emit('connected user', data.username);
     });
 
     client.joinRoom = function (data) {
@@ -93,7 +95,8 @@ io.sockets.on('connection', function (client) {
     };
 
     client.on('join', function (data) {
-        return client.joinRoom(data);
+        client.joinRoom(data);
+        client.broadcast.emit('connected user', data.username);
     });
 });
 

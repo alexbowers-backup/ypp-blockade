@@ -3,7 +3,7 @@ import { Player } from '../player/player.class.js';
 
 class Room {
     constructor() {
-        this.users = null;
+        this.users = [];
         this.master = null;
         this.Player = new Player;
         this.id = null;

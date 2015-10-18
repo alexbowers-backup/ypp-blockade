@@ -5,6 +5,7 @@ import { Message } from '../message/message.class.js';
 import { Socket } from '../socket/socket.class.js';
 import { Room } from '../room/room.class.js';
 import { Player } from '../player/player.class.js';
+import { Notify } from '../notify/notify.class.js';
 
 class LobbyCtrl {
     constructor($location, $rootScope) {
@@ -15,6 +16,13 @@ class LobbyCtrl {
 
         this.socket = new Socket();
         this.init();
+        this.socket.on('connected user', (user) => {
+            this.Room.users.push(user);
+            new Notify({
+                title: 'New player joined',
+                body: user + ' has joined the game'
+            });
+        });
     }
 
     init() {

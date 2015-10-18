@@ -45186,8 +45186,12 @@ var _roomRoomClassJs = require('../room/room.class.js');
 
 var _playerPlayerClassJs = require('../player/player.class.js');
 
+var _notifyNotifyClassJs = require('../notify/notify.class.js');
+
 var LobbyCtrl = (function () {
     function LobbyCtrl($location, $rootScope) {
+        var _this = this;
+
         _classCallCheck(this, LobbyCtrl);
 
         this.$location = $location;
@@ -45197,6 +45201,13 @@ var LobbyCtrl = (function () {
 
         this.socket = new _socketSocketClassJs.Socket();
         this.init();
+        this.socket.on('connected user', function (user) {
+            _this.Room.users.push(user);
+            new _notifyNotifyClassJs.Notify({
+                title: 'New player joined',
+                body: user + ' has joined the game'
+            });
+        });
     }
 
     _createClass(LobbyCtrl, [{
@@ -45212,43 +45223,6 @@ var LobbyCtrl = (function () {
     }, {
         key: 'createGame',
         value: function createGame() {
-            var _this = this;
-
-            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
-
-            this.LoginForm.properties.inProgress = true;
-
-            this.LoginForm.messages = [];
-
-            this.socket.emit('create', this.LoginForm.fields.username);
-
-            this.socket.on('login error', function (response) {
-                _this.$rootScope.$apply(function () {
-                    _this.LoginForm.messages.push(new _messageMessageClassJs.Message(response));
-                    _this.LoginForm.properties.inProgress = false;
-                });
-            });
-
-            this.socket.on('login', function (data) {
-                _this.$rootScope.$apply(function () {
-                    _this.Room.id = data.gameID;
-                    _this.Room.users = data.users;
-                    _this.Room.master = data.users.shift();
-
-                    _this.Room.Player = new _playerPlayerClassJs.Player({
-                        name: data.user
-                    });
-
-                    _this.$location.search('game', data.gameID);
-
-                    _this.stage = 2;
-                    _this.LoginForm.properties.inProgress = false;
-                });
-            });
-        }
-    }, {
-        key: 'joinGame',
-        value: function joinGame() {
             var _this2 = this;
 
             this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
@@ -45257,10 +45231,7 @@ var LobbyCtrl = (function () {
 
             this.LoginForm.messages = [];
 
-            this.socket.emit('join', {
-                username: this.LoginForm.fields.username,
-                gameID: this.LoginForm.fields.gameid
-            });
+            this.socket.emit('create', this.LoginForm.fields.username);
 
             this.socket.on('login error', function (response) {
                 _this2.$rootScope.$apply(function () {
@@ -45286,6 +45257,46 @@ var LobbyCtrl = (function () {
                 });
             });
         }
+    }, {
+        key: 'joinGame',
+        value: function joinGame() {
+            var _this3 = this;
+
+            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
+
+            this.LoginForm.properties.inProgress = true;
+
+            this.LoginForm.messages = [];
+
+            this.socket.emit('join', {
+                username: this.LoginForm.fields.username,
+                gameID: this.LoginForm.fields.gameid
+            });
+
+            this.socket.on('login error', function (response) {
+                _this3.$rootScope.$apply(function () {
+                    _this3.LoginForm.messages.push(new _messageMessageClassJs.Message(response));
+                    _this3.LoginForm.properties.inProgress = false;
+                });
+            });
+
+            this.socket.on('login', function (data) {
+                _this3.$rootScope.$apply(function () {
+                    _this3.Room.id = data.gameID;
+                    _this3.Room.users = data.users;
+                    _this3.Room.master = data.users.shift();
+
+                    _this3.Room.Player = new _playerPlayerClassJs.Player({
+                        name: data.user
+                    });
+
+                    _this3.$location.search('game', data.gameID);
+
+                    _this3.stage = 2;
+                    _this3.LoginForm.properties.inProgress = false;
+                });
+            });
+        }
     }]);
 
     return LobbyCtrl;
@@ -45295,7 +45306,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":53,"../message/message.class.js":57,"../player/player.class.js":58,"../room/room.class.js":59,"../socket/socket.class.js":60}],56:[function(require,module,exports){
+},{"../form/form.class.js":53,"../message/message.class.js":57,"../notify/notify.class.js":58,"../player/player.class.js":59,"../room/room.class.js":60,"../socket/socket.class.js":61}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45328,6 +45339,44 @@ var Message = function Message(object) {
 exports.Message = Message;
 
 },{}],58:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Notify = function Notify(object) {
+    _classCallCheck(this, Notify);
+
+    object = object || {};
+
+    if (object.title == null || object.body == null) {
+        console.error("Notification posted without title or body");
+        return;
+    }
+
+    if (!'Notification' in window) {
+        console.warn('Notifications are not supported in this browser');
+        return;
+    } else {
+        Notification.requestPermission(function () {
+            var notification = new Notification(object.title, {
+                body: object.body,
+                dir: 'auto'
+            });
+
+            setTimeout(function () {
+                notification.close();
+            }, object.delay || 3000);
+        });
+    }
+};
+
+exports.Notify = Notify;
+
+},{}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45345,7 +45394,7 @@ var Player = function Player(object) {
 
 exports.Player = Player;
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45364,7 +45413,7 @@ var Room = (function () {
     function Room() {
         _classCallCheck(this, Room);
 
-        this.users = null;
+        this.users = [];
         this.master = null;
         this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
@@ -45383,7 +45432,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{"../game/game.class.js":54,"../player/player.class.js":58}],60:[function(require,module,exports){
+},{"../game/game.class.js":54,"../player/player.class.js":59}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
