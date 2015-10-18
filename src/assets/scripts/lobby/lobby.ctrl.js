@@ -78,6 +78,21 @@ class LobbyCtrl {
                 this.LoginForm.properties.inProgress = false;
             });
         });
+
+        this.socket.on('login', (data) => {
+            this.$rootScope.$apply(() => {
+                this.Room = {
+                    users: data.users,
+                    user: data.user,
+                    id: data.gameID
+                };
+
+                this.$location.search('game', data.gameID);
+
+                this.stage = 2;
+                this.LoginForm.properties.inProgress = false;
+            });
+        });
     }
 }
 

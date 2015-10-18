@@ -45251,6 +45251,21 @@ var LobbyCtrl = (function () {
                     _this2.LoginForm.properties.inProgress = false;
                 });
             });
+
+            this.socket.on('login', function (data) {
+                _this2.$rootScope.$apply(function () {
+                    _this2.Room = {
+                        users: data.users,
+                        user: data.user,
+                        id: data.gameID
+                    };
+
+                    _this2.$location.search('game', data.gameID);
+
+                    _this2.stage = 2;
+                    _this2.LoginForm.properties.inProgress = false;
+                });
+            });
         }
     }]);
 

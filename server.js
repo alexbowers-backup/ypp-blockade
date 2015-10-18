@@ -26,26 +26,17 @@ io.sockets.on('connection', function (client) {
         }
 
         client.gameID = createRoom();
+        room = io.rooms[client.gameID];
         client.joinRoom({
             gameID: client.gameID,
             username: username
-        });
-
-        room = io.rooms[client.gameID];
-        client.username = username;
-        room.users.push(username);
-
-        client.emit('login', {
-            user: username,
-            users: room.users,
-            gameID: client.gameID
         });
     });
 
     client.joinRoom = function (data) {
         var room = io.rooms[data.gameID];
 
-        if(room === undefined) {
+        if (room === undefined) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'This game no longer exists'
@@ -89,6 +80,14 @@ io.sockets.on('connection', function (client) {
 
             return client.disconnect();
         }
+
+        room.users.push(data.username);
+
+        client.emit('login', {
+            user: data.username,
+            users: room.users,
+            gameID: client.gameID
+        });
     };
 
     client.on('join', function (data) {
