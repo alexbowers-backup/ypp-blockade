@@ -49,14 +49,18 @@ class LobbyCtrl {
                 this.Room = {
                     users: data.users,
                     user: data.user,
-                    id: data.gameID
+                    id: data.gameID,
+                    master: data.users.shift()
                 };
+
+                this.Room.isMaster = this.Room.master === this.Room.user;
 
                 this.$location.search('game', data.gameID);
 
                 this.stage = 2;
                 this.LoginForm.properties.inProgress = false;
             });
+
         });
     }
 

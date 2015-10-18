@@ -83,10 +83,12 @@ io.sockets.on('connection', function (client) {
 
         room.users.push(data.username);
 
+        client.gameID = data.gameID;
+
         client.emit('login', {
             user: data.username,
             users: room.users,
-            gameID: client.gameID
+            gameID: data.gameID
         });
     };
 

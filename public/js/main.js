@@ -45219,8 +45219,11 @@ var LobbyCtrl = (function () {
                     _this.Room = {
                         users: data.users,
                         user: data.user,
-                        id: data.gameID
+                        id: data.gameID,
+                        master: data.users.shift()
                     };
+
+                    _this.Room.isMaster = _this.Room.master === _this.Room.user;
 
                     _this.$location.search('game', data.gameID);
 
