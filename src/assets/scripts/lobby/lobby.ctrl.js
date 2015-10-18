@@ -1,17 +1,15 @@
 'use strict';
 
-import { User } from '../user/user.class.js';
 import { Form } from '../form/form.class.js';
 import { Message } from '../message/message.class.js';
 import { Socket } from '../socket/socket.class.js';
 import { Room } from '../room/room.class.js';
+import { Player } from '../player/player.class.js';
 
 class LobbyCtrl {
     constructor($location, $rootScope) {
         this.$location = $location;
         this.$rootScope = $rootScope;
-
-        this.User = new User;
         this.LoginForm = new Form;
         this.Room = new Room;
 
@@ -46,21 +44,19 @@ class LobbyCtrl {
 
         this.socket.on('login', (data) => {
             this.$rootScope.$apply(() => {
-                this.Room = {
-                    users: data.users,
-                    user: data.user,
-                    id: data.gameID,
-                    master: data.users.shift()
-                };
+                this.Room.id = data.gameID;
+                this.Room.users = data.users;
+                this.Room.master = data.users.shift();
 
-                this.Room.isMaster = this.Room.master === this.Room.user;
+                this.Room.Player = new Player({
+                    name: data.user
+                });
 
                 this.$location.search('game', data.gameID);
 
                 this.stage = 2;
                 this.LoginForm.properties.inProgress = false;
             });
-
         });
     }
 
@@ -85,11 +81,13 @@ class LobbyCtrl {
 
         this.socket.on('login', (data) => {
             this.$rootScope.$apply(() => {
-                this.Room = {
-                    users: data.users,
-                    user: data.user,
-                    id: data.gameID
-                };
+                this.Room.id = data.gameID;
+                this.Room.users = data.users;
+                this.Room.master = data.users.shift();
+
+                this.Room.Player = new Player({
+                    name: data.user
+                });
 
                 this.$location.search('game', data.gameID);
 

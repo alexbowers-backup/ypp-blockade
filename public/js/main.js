@@ -45176,8 +45176,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _userUserClassJs = require('../user/user.class.js');
-
 var _formFormClassJs = require('../form/form.class.js');
 
 var _messageMessageClassJs = require('../message/message.class.js');
@@ -45186,14 +45184,14 @@ var _socketSocketClassJs = require('../socket/socket.class.js');
 
 var _roomRoomClassJs = require('../room/room.class.js');
 
+var _playerPlayerClassJs = require('../player/player.class.js');
+
 var LobbyCtrl = (function () {
     function LobbyCtrl($location, $rootScope) {
         _classCallCheck(this, LobbyCtrl);
 
         this.$location = $location;
         this.$rootScope = $rootScope;
-
-        this.User = new _userUserClassJs.User();
         this.LoginForm = new _formFormClassJs.Form();
         this.Room = new _roomRoomClassJs.Room();
 
@@ -45233,14 +45231,13 @@ var LobbyCtrl = (function () {
 
             this.socket.on('login', function (data) {
                 _this.$rootScope.$apply(function () {
-                    _this.Room = {
-                        users: data.users,
-                        user: data.user,
-                        id: data.gameID,
-                        master: data.users.shift()
-                    };
+                    _this.Room.id = data.gameID;
+                    _this.Room.users = data.users;
+                    _this.Room.master = data.users.shift();
 
-                    _this.Room.isMaster = _this.Room.master === _this.Room.user;
+                    _this.Room.Player = new _playerPlayerClassJs.Player({
+                        name: data.user
+                    });
 
                     _this.$location.search('game', data.gameID);
 
@@ -45274,11 +45271,13 @@ var LobbyCtrl = (function () {
 
             this.socket.on('login', function (data) {
                 _this2.$rootScope.$apply(function () {
-                    _this2.Room = {
-                        users: data.users,
-                        user: data.user,
-                        id: data.gameID
-                    };
+                    _this2.Room.id = data.gameID;
+                    _this2.Room.users = data.users;
+                    _this2.Room.master = data.users.shift();
+
+                    _this2.Room.Player = new _playerPlayerClassJs.Player({
+                        name: data.user
+                    });
 
                     _this2.$location.search('game', data.gameID);
 
@@ -45296,7 +45295,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":53,"../message/message.class.js":57,"../room/room.class.js":58,"../socket/socket.class.js":59,"../user/user.class.js":60}],56:[function(require,module,exports){
+},{"../form/form.class.js":53,"../message/message.class.js":57,"../player/player.class.js":58,"../room/room.class.js":59,"../socket/socket.class.js":60}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45329,6 +45328,24 @@ var Message = function Message(object) {
 exports.Message = Message;
 
 },{}],58:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function Player(object) {
+    _classCallCheck(this, Player);
+
+    object = object || {};
+    this.name = object.name || null;
+};
+
+exports.Player = Player;
+
+},{}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45341,21 +45358,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _gameGameClassJs = require('../game/game.class.js');
 
+var _playerPlayerClassJs = require('../player/player.class.js');
+
 var Room = (function () {
     function Room() {
         _classCallCheck(this, Room);
 
         this.users = null;
-        this.user = null;
         this.master = null;
+        this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
         this.Game = new _gameGameClassJs.Game();
     }
 
     _createClass(Room, [{
-        key: 'isMaster',
-        value: function isMaster() {
-            return this.master === this.user;
+        key: 'isCurrentUserMaster',
+        value: function isCurrentUserMaster() {
+            return this.Player.name === this.master;
         }
     }]);
 
@@ -45364,7 +45383,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{"../game/game.class.js":54}],59:[function(require,module,exports){
+},{"../game/game.class.js":54,"../player/player.class.js":58}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45395,21 +45414,4 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],60:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var User = function User() {
-    _classCallCheck(this, User);
-
-    this.gameid = null;
-};
-
-exports.User = User;
-
-},{}]},{},[52]);
+},{"socket.io-client":4}]},{},[52]);

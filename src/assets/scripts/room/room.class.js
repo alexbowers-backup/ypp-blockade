@@ -1,16 +1,17 @@
 import { Game } from '../game/game.class.js';
+import { Player } from '../player/player.class.js';
 
 class Room {
     constructor() {
         this.users = null;
-        this.user = null;
         this.master = null;
+        this.Player = new Player;
         this.id = null;
         this.Game = new Game;
     }
 
-    isMaster() {
-        return this.master === this.user;
+    isCurrentUserMaster() {
+        return this.Player.name === this.master;
     }
 }
 

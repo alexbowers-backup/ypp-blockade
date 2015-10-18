@@ -98,7 +98,8 @@
 
         <div class="row" ng-show="lobby.stage == 2">
             <div class="col-xs-12 text-center">
-                <h3>{{ lobby.Room.user }} - Room #<a href title="Click to Copy">{{ lobby.Room.id }} <i class="ion-ios-copy-outline"></i></a>
+                <h3>{{ lobby.Room.Player.name }} - Room #<a href title="Click to Copy">{{ lobby.Room.id }} <i
+                        class="ion-ios-copy-outline"></i></a>
                 </h3>
 
                 <div class="row">
@@ -107,7 +108,7 @@
                     </div>
 
                     <div class="col-xs-2">
-                        <div class="counter">
+                        <div class="counter" ng-if="lobby.Room.Game.started">
                             <div class="rounds">
                                 <h2>Round: 1/5</h2>
                             </div>
@@ -117,12 +118,15 @@
                         </div>
 
                         <div class="messages">
-                            <div class="message">The game is over!</div>
-                            <div class="message">Your team won!</div>
-                            <div class="message">Your team lost!</div>
+                            <div class="alert alert-warning" ng-if="!lobby.Room.Game.started">
+                                The game has not yet started.
+                            </div>
+                            <div class="message" ng-if="lobby.Room.Game.started">The game is over!</div>
+                            <div class="message" ng-if="lobby.Room.Game.started">Your team won!</div>
+                            <div class="message" ng-if="lobby.Room.Game.started">Your team lost!</div>
                         </div>
 
-                        <div class="teams">
+                        <div class="teams" ng-if="lobby.Room.Game.started">
                             <h4 class="text-center">Teams</h4>
 
                             <div class="team">
@@ -144,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="lobby-controls push-down-lg">
+                        <div class="lobby-controls push-down-lg" ng-if="lobby.Room.isCurrentUserMaster()">
                             <h4 class="text-center">Lobby Controls</h4>
 
                             <p>You are the game master</p>
@@ -159,7 +163,7 @@
                     </div>
                 </div>
 
-                <div class="row push-down-lg">
+                <div class="row push-down-lg" ng-if="lobby.Room.Game.started">
                     <div class="col-xs-2 col-xs-offset-3">
                         <div class="row">
                             <div class="col-xs-12">
