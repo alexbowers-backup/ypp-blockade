@@ -20,9 +20,7 @@ io.sockets.on('connection', function (client) {
                 text: 'Your username is not valid'
             });
 
-            client.disconnect();
-
-            return;
+            return client.disconnect();
         }
 
         client.gameID = createRoom();
