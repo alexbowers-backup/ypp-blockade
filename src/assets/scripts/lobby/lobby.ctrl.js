@@ -23,29 +23,6 @@ class LobbyCtrl {
                 body: user + ' has joined the game'
             });
         });
-
-        this.socket.on('disconnected user', (data) => {
-            if(this.Room.Game.started) {
-
-            }
-
-            new Notify({
-                title: 'A Player has left',
-                body: data.username + ' has left the game'
-            });
-        });
-
-        this.socket.on('master left', () => {
-            new Notify({
-                title: 'The game owner has left',
-                body: 'The game owner has left, and so the game must stop.'
-            });
-
-            this.socket.disconnect();
-            this.Room.id = null;
-            this.Room.Game.started = false;
-            this.$location.search('game', null);
-        });
     }
 
     init() {

@@ -45208,27 +45208,6 @@ var LobbyCtrl = (function () {
                 body: user + ' has joined the game'
             });
         });
-
-        this.socket.on('disconnected user', function (data) {
-            if (_this.Room.Game.started) {}
-
-            new _notifyNotifyClassJs.Notify({
-                title: 'A Player has left',
-                body: data.username + ' has left the game'
-            });
-        });
-
-        this.socket.on('master left', function () {
-            new _notifyNotifyClassJs.Notify({
-                title: 'The game owner has left',
-                body: 'The game owner has left, and so the game must stop.'
-            });
-
-            _this.socket.disconnect();
-            _this.Room.id = null;
-            _this.Room.Game.started = false;
-            _this.$location.search('game', null);
-        });
     }
 
     _createClass(LobbyCtrl, [{
