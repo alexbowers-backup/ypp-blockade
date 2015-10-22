@@ -23,6 +23,14 @@ class LobbyCtrl {
                 body: user + ' has joined the game'
             });
         });
+
+        this.socket.on('disconnected user', (user) => {
+            this.Room.users.pop(user);
+            new Notify({
+                title: 'Player left',
+                body: user + ' has left the game'
+            });
+        });
     }
 
     init() {

@@ -54,7 +54,7 @@ io.sockets.on('connection', function (client) {
             return client.disconnect();
         }
 
-        if (!/^(?=.{4,12}$)[A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*$/.test(data.username) || data.username === null) {
+        if (!/^(?=.{4,12}$)[A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*$/.test(data.username) || data.username === null || data.username === undefined) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'Your username is not valid'
@@ -83,6 +83,7 @@ io.sockets.on('connection', function (client) {
 
         room.users.push(data.username);
 
+        client.username = data.username;
         client.gameID = data.gameID;
 
         client.emit('login', {
@@ -92,9 +93,23 @@ io.sockets.on('connection', function (client) {
         });
     };
 
+    client.leaveRoom = function () {
+        var room = io.rooms[client.gameID];
+
+        if (!client.username) return;
+
+        var index = room.users.indexOf(client.username);
+        room.users.splice(index, 1);
+    }
+
     client.on('join', function (data) {
         client.joinRoom(data);
         client.broadcast.emit('connected user', data.username);
+    });
+
+    client.on('disconnect', function () {
+        client.leaveRoom();
+        if (client.username) client.broadcast.emit('disconnected user', client.username);
     });
 });
 

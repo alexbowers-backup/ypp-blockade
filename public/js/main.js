@@ -45208,6 +45208,14 @@ var LobbyCtrl = (function () {
                 body: user + ' has joined the game'
             });
         });
+
+        this.socket.on('disconnected user', function (user) {
+            _this.Room.users.pop(user);
+            new _notifyNotifyClassJs.Notify({
+                title: 'Player left',
+                body: user + ' has left the game'
+            });
+        });
     }
 
     _createClass(LobbyCtrl, [{
