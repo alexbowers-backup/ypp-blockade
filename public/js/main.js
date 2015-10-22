@@ -45208,6 +45208,10 @@ var LobbyCtrl = (function () {
                 body: user + ' has joined the game'
             });
         });
+
+        this.socket.on('disconnected user', function (data) {
+            console.log('Disconnected User 1');
+        });
     }
 
     _createClass(LobbyCtrl, [{

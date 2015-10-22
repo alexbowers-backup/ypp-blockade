@@ -23,6 +23,10 @@ class LobbyCtrl {
                 body: user + ' has joined the game'
             });
         });
+
+        this.socket.on('disconnected user', function (data) {
+            console.log('Disconnected User 1');
+        });
     }
 
     init() {
