@@ -1,13 +1,6 @@
-var express = require('express'),
-    socket = require('socket.io');
-
-var port = 4000;
-var app = express();
-
-var io = socket.listen(app.listen(port));
-
-app.use(express.static(__dirname + '/public'));
-
-io.sockets.on('connection', function () {
-    // Logic to go here
-});
+/**
+ * All changes are to be made within src/assets/scripts/server/app.js
+ *
+ * Nothing should be added here!
+ */
+require('./src/assets/scripts/server/app.js');

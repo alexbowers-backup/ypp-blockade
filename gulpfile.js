@@ -15,8 +15,8 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('browserify', function () {
-    return browserify('./src/assets/scripts/app.js')
+gulp.task('client', function () {
+    return browserify('./src/assets/scripts/client/app.js')
         .transform(babelify)
         .bundle()
         .pipe(source('main.js'))
@@ -33,8 +33,8 @@ gulp.task('styles', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('src/assets/scripts/**/*.js', ['browserify']);
+    gulp.watch('src/assets/scripts/**/*.js', ['client']);
     gulp.watch('src/assets/sass/**/*.scss', ['styles']);
 });
 
-gulp.task('default', ['browserify', 'styles', 'watch']);
+gulp.task('default', ['client', 'styles', 'watch']);
