@@ -1,8 +1,12 @@
 var express = require('express'),
     socket = require('socket.io');
 
+import * as GameModule from './game/game.module.js';
+
 var port = 4000;
 var app = express();
+
+var game = new GameModule.ctrl;
 
 var io = socket.listen(app.listen(port));
 
