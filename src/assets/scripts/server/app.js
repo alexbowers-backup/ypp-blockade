@@ -6,10 +6,8 @@ var app = express();
 
 var io = socket.listen(app.listen(port));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/../../../../public'));
 
-io.sockets.on('connection', function () {
+io.sockets.on('connection', function (client) {
 
 });
-
-console.log('Called');
