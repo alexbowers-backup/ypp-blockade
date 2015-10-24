@@ -9,5 +9,15 @@ var io = socket.listen(app.listen(port));
 app.use(express.static(__dirname + '/../../../../public'));
 
 io.sockets.on('connection', function (client) {
+    client.on('create', function() {
+        // pass
+    });
 
+    client.on('join', function() {
+       // pass
+    });
+
+    client.on('disconnect', function() {
+       // pass
+    });
 });
