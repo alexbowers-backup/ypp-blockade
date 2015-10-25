@@ -14,23 +14,35 @@ var io = socket.listen(app.listen(port));
 
 app.use(express.static(__dirname + '/../../../../public'));
 
+io.rooms = {};
 io.sockets.on('connection', function (client) {
-    client.on('create', function(username) {
-        if(!User.validate(username)) {
+    var room;
+    client.on('create', function (username) {
+        if (!User.validate(username)) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'Your username is not valid'
             });
         } else {
-            console.log('Valid');
+            client.gameID = Game.generateRoomId(io);
+
+            io.rooms[client.gameID] = room = {users: []};
+
+            Game.joinRoom(client, client.gameID, username, room);
+
+            console.log(room);
         }
     });
 
-    client.on('join', function() {
-       // pass
+    client.on('join', function () {
+        // pass
+    });
+
+    client.on('disconnect', function () {
+        // pass
     });
 
     client.on('disconnect', function() {
-       // pass
+
     });
 });
