@@ -29,20 +29,22 @@ io.sockets.on('connection', function (client) {
             io.rooms[client.gameID] = room = {users: []};
 
             Game.joinRoom(client, client.gameID, username, room);
-
-            console.log(room);
         }
     });
 
-    client.on('join', function () {
+    client.on('join', function (data) {
         // pass
+        room = io.rooms[data.gameID];
+        
+        var test = Game.joinRoom(client, data.gameID, data.username, room);
+        if (test) {
+            client.broadcast.emit('connected user', data.username);
+        } else {
+            client.disconnect();
+        }
     });
 
     client.on('disconnect', function () {
         // pass
-    });
-
-    client.on('disconnect', function() {
-
     });
 });
