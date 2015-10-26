@@ -36,7 +36,6 @@ io.sockets.on('connection', function (client) {
         // pass
         room = io.rooms[data.gameID];
 
-
         var test = Game.joinRoom(client, data.gameID, data.username, room);
         if (test) {
             client.broadcast.emit('connected user', data.username);
@@ -47,7 +46,7 @@ io.sockets.on('connection', function (client) {
     });
 
     client.on('disconnect', function () {
-        if(client.username) {
+        if (client.username) {
             Game.leaveRoom(client, room);
             client.broadcast.emit('disconnected user', {user: client.username, users: room.users});
         }
