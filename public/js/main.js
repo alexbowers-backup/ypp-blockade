@@ -45129,7 +45129,35 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"./lobby/lobby.module":56,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"./lobby/lobby.module":57,"angular":2,"jquery":3}],53:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Draw = (function () {
+    function Draw() {
+        _classCallCheck(this, Draw);
+    }
+
+    _createClass(Draw, [{
+        key: 'zones',
+        value: function zones() {
+            console.log('Called draw zones');
+        }
+    }]);
+
+    return Draw;
+})();
+
+exports.Draw = Draw;
+
+},{}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45148,24 +45176,66 @@ var Form = function Form() {
 
 exports.Form = Form;
 
-},{}],54:[function(require,module,exports){
-"use strict";
+},{}],55:[function(require,module,exports){
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var Game = function Game() {
-    _classCallCheck(this, Game);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-    this.started = false;
-};
+var _drawDrawClassJs = require('../draw/draw.class.js');
+
+var Game = (function () {
+    function Game() {
+        _classCallCheck(this, Game);
+
+        this.started = false;
+        this.Draw = new _drawDrawClassJs.Draw();
+    }
+
+    _createClass(Game, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            this.canvas_wrapper = document.getElementById('game-wrapper');
+            this.canvas = document.getElementById('game');
+
+            this.canvas.width = this.canvas_wrapper.clientWidth;
+            this.canvas.height = this.canvas_wrapper.clientHeight;
+            console.log('Called init on game');
+            window.requestAnimationFrame(function () {
+                _this.loop();
+            });
+        }
+    }, {
+        key: 'update',
+        value: function update() {
+            this.Draw.zones();
+        }
+    }, {
+        key: 'loop',
+        value: function loop() {
+            var _this2 = this;
+
+            window.requestAnimationFrame(function () {
+                _this2.loop();
+            });
+
+            this.update();
+        }
+    }]);
+
+    return Game;
+})();
 
 exports.Game = Game;
 
-},{}],55:[function(require,module,exports){
+},{"../draw/draw.class.js":53}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45319,7 +45389,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":53,"../message/message.class.js":57,"../notify/notify.class.js":58,"../player/player.class.js":59,"../room/room.class.js":60,"../socket/socket.class.js":61}],56:[function(require,module,exports){
+},{"../form/form.class.js":54,"../message/message.class.js":58,"../notify/notify.class.js":59,"../player/player.class.js":60,"../room/room.class.js":61,"../socket/socket.class.js":62}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45332,7 +45402,7 @@ var ctrl = _lobbyCtrlJs.LobbyCtrl;
 
 exports.ctrl = ctrl;
 
-},{"./lobby.ctrl.js":55}],57:[function(require,module,exports){
+},{"./lobby.ctrl.js":56}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45351,7 +45421,7 @@ var Message = function Message(object) {
 
 exports.Message = Message;
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45389,7 +45459,7 @@ var Notify = function Notify(object) {
 
 exports.Notify = Notify;
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45407,7 +45477,7 @@ var Player = function Player(object) {
 
 exports.Player = Player;
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45443,6 +45513,11 @@ var Room = (function () {
         value: function leaveGame() {
             window.location.href = "/";
         }
+    }, {
+        key: 'startGame',
+        value: function startGame() {
+            this.Game.init();
+        }
     }]);
 
     return Room;
@@ -45450,7 +45525,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{"../game/game.class.js":54,"../player/player.class.js":59}],61:[function(require,module,exports){
+},{"../game/game.class.js":55,"../player/player.class.js":60}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

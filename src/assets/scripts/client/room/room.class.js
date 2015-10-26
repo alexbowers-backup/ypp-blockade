@@ -17,6 +17,10 @@ class Room {
     leaveGame() {
         window.location.href = "/";
     }
+
+    startGame() {
+        this.Game.init();
+    }
 }
 
 export { Room };
