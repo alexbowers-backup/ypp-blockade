@@ -145,12 +145,12 @@
                             </div>
                         </div>
 
-                        <div class="lobby-controls push-down-lg" ng-if="lobby.Room.isCurrentUserMaster()">
+                        <div class="lobby-controls push-down-lg">
                             <h4 class="text-center">Lobby Controls</h4>
 
-                            <p>You are the game master</p>
+                            <p ng-if="lobby.Room.isCurrentUserMaster()">You are the game master</p>
 
-                            <div class="control">
+                            <div class="control" ng-if="lobby.Room.isCurrentUserMaster()">
                                 <button type="button" class="btn btn-success" ng-disabled="lobby.Room.users.length == 1">Start Game</button>
                             </div>
                             <div class="control push-up-sm">
