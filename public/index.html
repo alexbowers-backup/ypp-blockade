@@ -151,7 +151,7 @@
                             <p>You are the game master</p>
 
                             <div class="control">
-                                <button type="button" class="btn btn-success">Start Game</button>
+                                <button type="button" class="btn btn-success" ng-disabled="lobby.Room.users.length == 1">Start Game</button>
                             </div>
                             <div class="control push-up-sm">
                                 <button type="button" class="btn btn-danger">Leave Game</button>
