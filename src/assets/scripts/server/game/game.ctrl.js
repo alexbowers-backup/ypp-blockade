@@ -79,6 +79,8 @@ class GameCtrl {
             user: username,
             users: room.users
         });
+
+        return true;
     }
 }
 
