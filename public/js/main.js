@@ -45141,14 +45141,20 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Draw = (function () {
-    function Draw() {
+    function Draw(context) {
         _classCallCheck(this, Draw);
+
+        this.context = context;
     }
 
     _createClass(Draw, [{
         key: 'zones',
         value: function zones() {
-            console.log('Called draw zones');
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < 15; j++) {
+                    //this.context.drawImage()
+                }
+            }
         }
     }]);
 
@@ -45194,7 +45200,6 @@ var Game = (function () {
         _classCallCheck(this, Game);
 
         this.started = false;
-        this.Draw = new _drawDrawClassJs.Draw();
     }
 
     _createClass(Game, [{
@@ -45207,7 +45212,7 @@ var Game = (function () {
 
             this.canvas.width = this.canvas_wrapper.clientWidth;
             this.canvas.height = this.canvas_wrapper.clientHeight;
-            console.log('Called init on game');
+            this.Draw = new _drawDrawClassJs.Draw(this.canvas.getContext('2d'));
             window.requestAnimationFrame(function () {
                 _this.loop();
             });

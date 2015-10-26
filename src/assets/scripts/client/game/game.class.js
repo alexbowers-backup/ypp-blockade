@@ -3,7 +3,6 @@ import { Draw } from '../draw/draw.class.js';
 class Game {
     constructor() {
         this.started = false;
-        this.Draw = new Draw;
     }
 
     init() {
@@ -12,7 +11,7 @@ class Game {
 
         this.canvas.width = this.canvas_wrapper.clientWidth;
         this.canvas.height = this.canvas_wrapper.clientHeight;
-        console.log('Called init on game');
+        this.Draw = new Draw(this.canvas.getContext('2d'));
         window.requestAnimationFrame(() => {
             this.loop()
         });

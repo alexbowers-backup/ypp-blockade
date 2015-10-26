@@ -1,12 +1,16 @@
 'use strict';
 
 class Draw {
-    constructor() {
-
+    constructor(context) {
+        this.context = context;
     }
 
     zones() {
-        console.log('Called draw zones');
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 15; j++) {
+                //this.context.drawImage()
+            }
+        }
     }
 }
 
