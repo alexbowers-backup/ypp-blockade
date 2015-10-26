@@ -140,11 +140,8 @@
                         <div class="players">
                             <h4 class="text-center">Players</h4>
 
-                            <div class="player">
-                                Name
-                            </div>
-                            <div class="player">
-                                Name 2
+                            <div ng-repeat="player in lobby.Room.users" class="player">
+                                {{ player }}
                             </div>
                         </div>
 

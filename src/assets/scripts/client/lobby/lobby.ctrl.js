@@ -16,20 +16,24 @@ class LobbyCtrl {
 
         this.socket = new Socket();
         this.init();
-        
+
         this.socket.on('connected user', (user) => {
-            this.Room.users.push(user);
-            new Notify({
-                title: 'New player joined',
-                body: user + ' has joined the game'
+            this.$rootScope.$apply(() => {
+                this.Room.users.push(user);
+                new Notify({
+                    title: 'New player joined',
+                    body: user + ' has joined the game'
+                });
             });
         });
 
         this.socket.on('disconnected user', (data) => {
-            this.Room.users = data.users;
-            new Notify({
-                title: 'Player left',
-                body: data.user + ' has left the game'
+            this.$rootScope.$apply(() => {
+                this.Room.users = data.users;
+                new Notify({
+                    title: 'Player left',
+                    body: data.user + ' has left the game'
+                });
             });
         });
     }
@@ -63,7 +67,7 @@ class LobbyCtrl {
             this.$rootScope.$apply(() => {
                 this.Room.id = data.gameID;
                 this.Room.users = data.users;
-                this.Room.master = data.users.shift();
+                this.Room.master = data.users[0];
 
                 this.Room.Player = new Player({
                     name: data.user
@@ -100,7 +104,7 @@ class LobbyCtrl {
             this.$rootScope.$apply(() => {
                 this.Room.id = data.gameID;
                 this.Room.users = data.users;
-                this.Room.master = data.users.shift();
+                this.Room.master = data.users[0];
 
                 this.Room.Player = new Player({
                     name: data.user

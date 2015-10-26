@@ -45203,18 +45203,22 @@ var LobbyCtrl = (function () {
         this.init();
 
         this.socket.on('connected user', function (user) {
-            _this.Room.users.push(user);
-            new _notifyNotifyClassJs.Notify({
-                title: 'New player joined',
-                body: user + ' has joined the game'
+            _this.$rootScope.$apply(function () {
+                _this.Room.users.push(user);
+                new _notifyNotifyClassJs.Notify({
+                    title: 'New player joined',
+                    body: user + ' has joined the game'
+                });
             });
         });
 
         this.socket.on('disconnected user', function (data) {
-            _this.Room.users = data.users;
-            new _notifyNotifyClassJs.Notify({
-                title: 'Player left',
-                body: data.user + ' has left the game'
+            _this.$rootScope.$apply(function () {
+                _this.Room.users = data.users;
+                new _notifyNotifyClassJs.Notify({
+                    title: 'Player left',
+                    body: data.user + ' has left the game'
+                });
             });
         });
     }
@@ -45253,7 +45257,7 @@ var LobbyCtrl = (function () {
                 _this2.$rootScope.$apply(function () {
                     _this2.Room.id = data.gameID;
                     _this2.Room.users = data.users;
-                    _this2.Room.master = data.users.shift();
+                    _this2.Room.master = data.users[0];
 
                     _this2.Room.Player = new _playerPlayerClassJs.Player({
                         name: data.user
@@ -45293,7 +45297,7 @@ var LobbyCtrl = (function () {
                 _this3.$rootScope.$apply(function () {
                     _this3.Room.id = data.gameID;
                     _this3.Room.users = data.users;
-                    _this3.Room.master = data.users.shift();
+                    _this3.Room.master = data.users[0];
 
                     _this3.Room.Player = new _playerPlayerClassJs.Player({
                         name: data.user
