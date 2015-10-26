@@ -35,16 +35,21 @@ io.sockets.on('connection', function (client) {
     client.on('join', function (data) {
         // pass
         room = io.rooms[data.gameID];
-        
+
+
         var test = Game.joinRoom(client, data.gameID, data.username, room);
         if (test) {
             client.broadcast.emit('connected user', data.username);
+            client.username = data.username;
         } else {
             client.disconnect();
         }
     });
 
     client.on('disconnect', function () {
-        // pass
+        if(client.username) {
+            Game.leaveRoom(client, room);
+            client.broadcast.emit('disconnected user', {user: client.username, users: room.users});
+        }
     });
 });

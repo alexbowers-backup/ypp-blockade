@@ -45201,6 +45201,7 @@ var LobbyCtrl = (function () {
 
         this.socket = new _socketSocketClassJs.Socket();
         this.init();
+
         this.socket.on('connected user', function (user) {
             _this.Room.users.push(user);
             new _notifyNotifyClassJs.Notify({
@@ -45209,11 +45210,11 @@ var LobbyCtrl = (function () {
             });
         });
 
-        this.socket.on('disconnected user', function (user) {
-            _this.Room.users.pop(user);
+        this.socket.on('disconnected user', function (data) {
+            _this.Room.users = data.users;
             new _notifyNotifyClassJs.Notify({
                 title: 'Player left',
-                body: user + ' has left the game'
+                body: data.user + ' has left the game'
             });
         });
     }

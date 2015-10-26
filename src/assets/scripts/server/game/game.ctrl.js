@@ -18,6 +18,10 @@ class GameCtrl {
         }
     }
 
+    leaveRoom(client, room) {
+        room.users.splice(room.users.indexOf(client.username), 1);
+    }
+
     joinRoom(client, gameID, username, room) {
 
         if (room === undefined) {

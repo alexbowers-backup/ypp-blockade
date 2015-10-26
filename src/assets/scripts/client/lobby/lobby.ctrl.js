@@ -16,6 +16,7 @@ class LobbyCtrl {
 
         this.socket = new Socket();
         this.init();
+        
         this.socket.on('connected user', (user) => {
             this.Room.users.push(user);
             new Notify({
@@ -24,11 +25,11 @@ class LobbyCtrl {
             });
         });
 
-        this.socket.on('disconnected user', (user) => {
-            this.Room.users.pop(user);
+        this.socket.on('disconnected user', (data) => {
+            this.Room.users = data.users;
             new Notify({
                 title: 'Player left',
-                body: user + ' has left the game'
+                body: data.user + ' has left the game'
             });
         });
     }
