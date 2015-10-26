@@ -13,6 +13,10 @@ class Room {
     isCurrentUserMaster() {
         return this.Player.name === this.master;
     }
+
+    leaveGame() {
+        window.location.href = "/";
+    }
 }
 
 export { Room };

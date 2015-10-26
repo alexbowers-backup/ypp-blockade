@@ -45438,6 +45438,11 @@ var Room = (function () {
         value: function isCurrentUserMaster() {
             return this.Player.name === this.master;
         }
+    }, {
+        key: 'leaveGame',
+        value: function leaveGame() {
+            window.location.href = "/";
+        }
     }]);
 
     return Room;
