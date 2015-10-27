@@ -36,6 +36,10 @@ class LobbyCtrl {
                 });
             });
         });
+
+        this.socket.on('disconnected user', function (data) {
+            console.log('Disconnected User 1');
+        });
     }
 
     init() {
