@@ -1,15 +1,16 @@
 'use strict';
 
 class Draw {
-    constructor(context) {
+    constructor(context, images) {
         this.context = context;
+        this.Images = images;
+        this.initial = true;
     }
 
     zones() {
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 15; j++) {
-                //this.context.drawImage()
-            }
+        if(this.initial) {
+            console.log(this.Images.get('safezone'));
+            this.initial = false;
         }
     }
 }
