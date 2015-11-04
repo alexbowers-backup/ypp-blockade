@@ -9,11 +9,9 @@ class Draw {
 
     zones() {
         if(this.initial) {
-            this.context.font = "30 px Arial";
-            this.context.fillText("Hello World", 10, 50);
-            for (var i = 0; i < 10; i++) {
-                for (var j = 0; j < 10; j++) {
-                    this.context.drawImage(this.Images.get('safezone'), 10, 20);
+            for (var i = 0; i < 30; i++) {
+                for (var j = 0; j < 25; j++) {
+                    this.context.drawImage(this.Images.get('safezone'), 30 * i, 30 * j);
                 }
             }
             this.initial = false;

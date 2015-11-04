@@ -45132,13 +45132,13 @@ window.$ = window.jQuery = _jquery2['default'];
 },{"./lobby/lobby.module":58,"angular":2,"jquery":3}],53:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Draw = (function () {
     function Draw(context, images) {
@@ -45150,14 +45150,12 @@ var Draw = (function () {
     }
 
     _createClass(Draw, [{
-        key: "zones",
+        key: 'zones',
         value: function zones() {
             if (this.initial) {
-                this.context.font = "30 px Arial";
-                this.context.fillText("Hello World", 10, 50);
-                for (var i = 0; i < 10; i++) {
-                    for (var j = 0; j < 10; j++) {
-                        this.context.drawImage(this.Images.get('safezone'), 10, 20);
+                for (var i = 0; i < 30; i++) {
+                    for (var j = 0; j < 25; j++) {
+                        this.context.drawImage(this.Images.get('safezone'), 30 * i, 30 * j);
                     }
                 }
                 this.initial = false;
@@ -45219,8 +45217,8 @@ var Game = (function () {
             this.canvas_wrapper = document.getElementById('game-wrapper');
             this.canvas = document.getElementById('game');
 
-            this.canvas.width = this.canvas_wrapper.clientWidth;
-            this.canvas.height = this.canvas_wrapper.clientHeight;
+            this.canvas.width = 1920;
+            this.canvas.height = 1600;
 
             this.Draw = new _drawDrawClassJs.Draw(this.canvas.getContext('2d'), this.Images);
 

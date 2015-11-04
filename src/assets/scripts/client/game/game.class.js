@@ -11,8 +11,8 @@ class Game {
         this.canvas_wrapper = document.getElementById('game-wrapper');
         this.canvas = document.getElementById('game');
 
-        this.canvas.width = this.canvas_wrapper.clientWidth;
-        this.canvas.height = this.canvas_wrapper.clientHeight;
+        this.canvas.width = 1920;
+        this.canvas.height = 1600;
 
         this.Draw = new Draw(this.canvas.getContext('2d'), this.Images);
 
