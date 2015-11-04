@@ -9,7 +9,7 @@ class Images {
 
     set(name, location) {
         var image = new Image();
-        image.src = 'images/' + location + '.png';
+        image.src = '/images/' + location + '.png';
         this.images[name] = image;
     }
 }

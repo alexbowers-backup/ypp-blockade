@@ -4,6 +4,7 @@ class Game {
     constructor(images) {
         this.started = false;
         this.Images = images;
+        this.Images.set('safezone', 'safezone');
     }
 
     init() {
@@ -13,7 +14,6 @@ class Game {
         this.canvas.width = this.canvas_wrapper.clientWidth;
         this.canvas.height = this.canvas_wrapper.clientHeight;
 
-        this.Images.set('safezone', 'safezone');
         this.Draw = new Draw(this.canvas.getContext('2d'), this.Images);
 
         window.requestAnimationFrame(() => {
