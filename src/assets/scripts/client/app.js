@@ -2,6 +2,7 @@ import jquery from 'jquery';
 import angular from 'angular';
 
 import * as LobbyModule from './lobby/lobby.module';
+import Number from '../misc/number.prototype.js';
 
 angular.module('CadeSim', [])
     .config(['$locationProvider', function ($locationProvider) {

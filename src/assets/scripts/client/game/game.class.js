@@ -7,6 +7,7 @@ class Game {
         this.Config = config;
         this.Images.set('safezone', 'safezone');
         this.Images.set('opensea', 'opensea');
+        this.Images.set('rock', 'rock');
     }
 
     init() {

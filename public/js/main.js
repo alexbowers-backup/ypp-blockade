@@ -45123,13 +45123,17 @@ var _lobbyLobbyModule = require('./lobby/lobby.module');
 
 var LobbyModule = _interopRequireWildcard(_lobbyLobbyModule);
 
+var _miscNumberPrototypeJs = require('../misc/number.prototype.js');
+
+var _miscNumberPrototypeJs2 = _interopRequireDefault(_miscNumberPrototypeJs);
+
 _angular2['default'].module('CadeSim', []).config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode(true);
 }]).controller('LobbyCtrl', LobbyModule.ctrl);
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"../misc/number.prototype.js":65,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45207,11 +45211,13 @@ var Draw = (function () {
             /**
              * Make the left 3 most, and right 3 most columns be safezone
              */
-            if (x in [0, 1, 2] || this.Config.get('columns') - 1 - x in [0, 1, 2]) {
+            if (x['in']([0, 1, 2]) || (this.Config.get('columns') - x - 1)['in']([0, 1, 2])) {
                 return 'safezone';
-            } else {
-                return 'opensea';
+            } else if (x == 4 && y == 11 || x == 11 && y == 9 || x == 19 && y == 9 || x == 17 && y == 4 || x == 22 && y == 13 || x == 23 && y == 2 || x == 9 && y == 3) {
+                return 'rock';
             }
+
+            return 'opensea';
         }
     }]);
 
@@ -45261,6 +45267,7 @@ var Game = (function () {
         this.Config = config;
         this.Images.set('safezone', 'safezone');
         this.Images.set('opensea', 'opensea');
+        this.Images.set('rock', 'rock');
     }
 
     _createClass(Game, [{
@@ -45669,4 +45676,17 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}]},{},[52]);
+},{"socket.io-client":4}],65:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+Number.prototype["in"] = function (array) {
+    return (array || []).indexOf(this) !== -1;
+};
+
+exports["default"] = Number;
+module.exports = exports["default"];
+
+},{}]},{},[52]);
