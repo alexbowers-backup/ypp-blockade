@@ -42,6 +42,7 @@
 </nav>
 
 <div ng-controller="LobbyCtrl as lobby" class="slide primary margin-top-50">
+    <div ng-init="lobby.stage = 2;"></div>
     <div class="container">
         <div class="row" ng-show="lobby.stage == 1">
             <div class="col-xs-12 text-center">

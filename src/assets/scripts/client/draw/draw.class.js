@@ -6,7 +6,6 @@ class Draw {
         this.Images = images;
         this.Config = config;
         this.initial = true;
-
     }
 
     zones() {
