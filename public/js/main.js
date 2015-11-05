@@ -45129,7 +45129,46 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"./lobby/lobby.module":58,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Config = (function () {
+    function Config() {
+        _classCallCheck(this, Config);
+
+        this.data = {
+            rows: 15,
+            columns: 30,
+            grid_size: 30
+        };
+    }
+
+    _createClass(Config, [{
+        key: 'get',
+        value: function get(name) {
+            return this.data[name];
+        }
+    }, {
+        key: 'set',
+        value: function set(name, value) {
+            this.data[name] = value;
+        }
+    }]);
+
+    return Config;
+})();
+
+exports.Config = Config;
+
+},{}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45141,24 +45180,37 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Draw = (function () {
-    function Draw(context, images) {
+    function Draw(context, images, config) {
         _classCallCheck(this, Draw);
 
         this.context = context;
         this.Images = images;
+        this.Config = config;
         this.initial = true;
+
+        console.log(this.Config);
     }
 
     _createClass(Draw, [{
         key: 'zones',
         value: function zones() {
             if (this.initial) {
-                for (var i = 0; i < 30; i++) {
-                    for (var j = 0; j < 25; j++) {
-                        this.context.drawImage(this.Images.get('safezone'), 30 * i, 30 * j);
+                for (var i = 0; i < this.Config.get('columns'); i++) {
+                    for (var j = 0; j < this.Config.get('rows'); j++) {
+                        this.context.drawImage(this.Images.get(this.type(i, j)), this.Config.get('grid_size') * i, this.Config.get('grid_size') * j);
                     }
                 }
                 this.initial = false;
+            }
+        }
+    }, {
+        key: 'type',
+        value: function type(x, y) {
+            console.log('X: ' + x + ' Y: ' + y);
+            if (x == 0 || x == 1) {
+                return 'safezone';
+            } else {
+                return 'opensea';
             }
         }
     }]);
@@ -45168,7 +45220,7 @@ var Draw = (function () {
 
 exports.Draw = Draw;
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45187,7 +45239,7 @@ var Form = function Form() {
 
 exports.Form = Form;
 
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45201,12 +45253,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _drawDrawClassJs = require('../draw/draw.class.js');
 
 var Game = (function () {
-    function Game(images) {
+    function Game(images, config) {
         _classCallCheck(this, Game);
 
         this.started = false;
         this.Images = images;
+        this.Config = config;
         this.Images.set('safezone', 'safezone');
+        this.Images.set('opensea', 'opensea');
     }
 
     _createClass(Game, [{
@@ -45220,7 +45274,7 @@ var Game = (function () {
             this.canvas.width = 1920;
             this.canvas.height = 1600;
 
-            this.Draw = new _drawDrawClassJs.Draw(this.canvas.getContext('2d'), this.Images);
+            this.Draw = new _drawDrawClassJs.Draw(this.canvas.getContext('2d'), this.Images, this.Config);
 
             window.requestAnimationFrame(function () {
                 _this.loop();
@@ -45249,7 +45303,7 @@ var Game = (function () {
 
 exports.Game = Game;
 
-},{"../draw/draw.class.js":53}],56:[function(require,module,exports){
+},{"../draw/draw.class.js":54}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45286,7 +45340,7 @@ var Images = (function () {
 
 exports.Images = Images;
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45444,7 +45498,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":54,"../message/message.class.js":59,"../notify/notify.class.js":60,"../player/player.class.js":61,"../room/room.class.js":62,"../socket/socket.class.js":63}],58:[function(require,module,exports){
+},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":64}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45457,7 +45511,7 @@ var ctrl = _lobbyCtrlJs.LobbyCtrl;
 
 exports.ctrl = ctrl;
 
-},{"./lobby.ctrl.js":57}],59:[function(require,module,exports){
+},{"./lobby.ctrl.js":58}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45476,7 +45530,7 @@ var Message = function Message(object) {
 
 exports.Message = Message;
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45514,7 +45568,7 @@ var Notify = function Notify(object) {
 
 exports.Notify = Notify;
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45532,7 +45586,7 @@ var Player = function Player(object) {
 
 exports.Player = Player;
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45549,6 +45603,8 @@ var _playerPlayerClassJs = require('../player/player.class.js');
 
 var _imagesImagesClassJs = require('../images/images.class.js');
 
+var _configConfigClassJs = require('../config/config.class.js');
+
 var Room = (function () {
     function Room() {
         _classCallCheck(this, Room);
@@ -45557,7 +45613,7 @@ var Room = (function () {
         this.master = null;
         this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
-        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images());
+        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config());
     }
 
     _createClass(Room, [{
@@ -45582,7 +45638,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{"../game/game.class.js":55,"../images/images.class.js":56,"../player/player.class.js":61}],63:[function(require,module,exports){
+},{"../config/config.class.js":53,"../game/game.class.js":56,"../images/images.class.js":57,"../player/player.class.js":62}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

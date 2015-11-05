@@ -1,10 +1,12 @@
 import { Draw } from '../draw/draw.class.js';
 
 class Game {
-    constructor(images) {
+    constructor(images, config) {
         this.started = false;
         this.Images = images;
+        this.Config = config;
         this.Images.set('safezone', 'safezone');
+        this.Images.set('opensea', 'opensea');
     }
 
     init() {
@@ -14,7 +16,7 @@ class Game {
         this.canvas.width = 1920;
         this.canvas.height = 1600;
 
-        this.Draw = new Draw(this.canvas.getContext('2d'), this.Images);
+        this.Draw = new Draw(this.canvas.getContext('2d'), this.Images, this.Config);
 
         window.requestAnimationFrame(() => {
             this.loop()
