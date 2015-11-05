@@ -4,6 +4,9 @@ class Images {
     }
 
     get(name) {
+        if(typeof this.images[name] == 'undefined') {
+            throw new Error("The image " + name + " has not been initialised");
+        }
         return this.images[name];
     }
 

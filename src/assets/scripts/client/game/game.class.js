@@ -5,9 +5,17 @@ class Game {
         this.started = false;
         this.Images = images;
         this.Config = config;
-        this.Images.set('safezone', 'safezone');
-        this.Images.set('opensea', 'opensea');
+        this.Images.set('safe-zone', 'safezone');
+        this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
+        this.Images.set('whirlwind-top-left', 'whirlwind-top-left');
+        this.Images.set('whirlwind-top-right', 'whirlwind-top-right');
+        this.Images.set('whirlwind-bottom-left', 'whirlwind-bottom-left');
+        this.Images.set('whirlwind-bottom-right', 'whirlwind-bottom-right');
+        this.Images.set('wind-left', 'wind-left');
+        this.Images.set('wind-right', 'wind-right');
+        this.Images.set('wind-up', 'wind-up');
+        this.Images.set('wind-down', 'wind-down');
     }
 
     init() {

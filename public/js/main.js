@@ -45212,12 +45212,28 @@ var Draw = (function () {
              * Make the left 3 most, and right 3 most columns be safezone
              */
             if (x['in']([0, 1, 2]) || (this.Config.get('columns') - x - 1)['in']([0, 1, 2])) {
-                return 'safezone';
+                return 'safe-zone';
             } else if (x == 4 && y == 11 || x == 11 && y == 9 || x == 19 && y == 9 || x == 17 && y == 4 || x == 22 && y == 13 || x == 23 && y == 2 || x == 9 && y == 3) {
                 return 'rock';
+            } else if (x == 12 && y == 2 || x == 18 && y == 11) {
+                return 'whirlwind-top-left';
+            } else if (x == 13 && y == 2 || x == 19 && y == 11) {
+                return 'whirlwind-top-right';
+            } else if (x == 12 && y == 3 || x == 18 && y == 12) {
+                return 'whirlwind-bottom-left';
+            } else if (x == 13 && y == 3 || x == 19 && y == 12) {
+                return 'whirlwind-bottom-right';
+            } else if (x == 7 && y == 7 || x == 8 && y == 7 || x == 9 && y == 7 || x == 3 && y == 7 || x == 3 && y == 8 || x == 3 && y == 8 || x == 3 && y == 9 || x == 4 && y == 10 || x == 21 && y == 3) {
+                return 'wind-left';
+            } else if (x == 7 && y == 8 || x == 8 && y == 8 || x == 9 && y == 8 || x == 10 && y == 8 || x == 3 && y == 10) {
+                return 'wind-right';
+            } else if (x == 11 && y == 8 || x == 11 && y == 10 || x == 12 && y == 4) {
+                return 'wind-up';
+            } else if (x == 19 && y == 8 || x == 21 && y == 10 || x == 19 && y == 4) {
+                return 'wind-down';
             }
 
-            return 'opensea';
+            return 'open-sea';
         }
     }]);
 
@@ -45265,9 +45281,17 @@ var Game = (function () {
         this.started = false;
         this.Images = images;
         this.Config = config;
-        this.Images.set('safezone', 'safezone');
-        this.Images.set('opensea', 'opensea');
+        this.Images.set('safe-zone', 'safezone');
+        this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
+        this.Images.set('whirlwind-top-left', 'whirlwind-top-left');
+        this.Images.set('whirlwind-top-right', 'whirlwind-top-right');
+        this.Images.set('whirlwind-bottom-left', 'whirlwind-bottom-left');
+        this.Images.set('whirlwind-bottom-right', 'whirlwind-bottom-right');
+        this.Images.set('wind-left', 'wind-left');
+        this.Images.set('wind-right', 'wind-right');
+        this.Images.set('wind-up', 'wind-up');
+        this.Images.set('wind-down', 'wind-down');
     }
 
     _createClass(Game, [{
@@ -45311,15 +45335,15 @@ var Game = (function () {
 exports.Game = Game;
 
 },{"../draw/draw.class.js":54}],57:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Images = (function () {
     function Images() {
@@ -45329,12 +45353,15 @@ var Images = (function () {
     }
 
     _createClass(Images, [{
-        key: 'get',
+        key: "get",
         value: function get(name) {
+            if (typeof this.images[name] == 'undefined') {
+                throw new Error("The image " + name + " has not been initialised");
+            }
             return this.images[name];
         }
     }, {
-        key: 'set',
+        key: "set",
         value: function set(name, location) {
             var image = new Image();
             image.src = '/images/' + location + '.png';
