@@ -6,12 +6,10 @@ class Draw {
         this.Images = images;
         this.Config = config;
         this.initial = true;
-
-        console.log(this.Config);
     }
 
     zones() {
-        if(this.initial) {
+        if (this.initial) {
             for (var i = 0; i < this.Config.get('columns'); i++) {
                 for (var j = 0; j < this.Config.get('rows'); j++) {
                     this.context.drawImage(this.Images.get(this.type(i, j)), this.Config.get('grid_size') * i, this.Config.get('grid_size') * j);
@@ -22,8 +20,10 @@ class Draw {
     }
 
     type(x, y) {
-        console.log('X: ' + x + ' Y: ' + y);
-        if(x == 0 || x == 1) {
+        /**
+         * Make the left 3 most, and right 3 most columns be safezone
+         */
+        if (x in [0, 1, 2] || this.Config.get('columns') - 1 - x in [0, 1, 2]) {
             return 'safezone';
         } else {
             return 'opensea';

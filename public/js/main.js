@@ -45187,8 +45187,6 @@ var Draw = (function () {
         this.Images = images;
         this.Config = config;
         this.initial = true;
-
-        console.log(this.Config);
     }
 
     _createClass(Draw, [{
@@ -45206,8 +45204,10 @@ var Draw = (function () {
     }, {
         key: 'type',
         value: function type(x, y) {
-            console.log('X: ' + x + ' Y: ' + y);
-            if (x == 0 || x == 1) {
+            /**
+             * Make the left 3 most, and right 3 most columns be safezone
+             */
+            if (x in [0, 1, 2] || this.Config.get('columns') - 1 - x in [0, 1, 2]) {
                 return 'safezone';
             } else {
                 return 'opensea';
