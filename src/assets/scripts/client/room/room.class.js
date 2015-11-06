@@ -1,7 +1,7 @@
 import { Game } from '../game/game.class.js';
 import { Player } from '../player/player.class.js';
 import { Images } from '../images/images.class.js';
-import { Config } from '../config/config.class.js';
+import { Config } from '../../shared/config/config.class.js';
 
 class Room {
     constructor() {

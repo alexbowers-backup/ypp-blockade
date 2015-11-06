@@ -45133,53 +45133,7 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"../misc/number.prototype.js":65,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var Config = (function () {
-    function Config() {
-        _classCallCheck(this, Config);
-
-        this.data = {
-            rows: 15,
-            columns: 30,
-            grid_size: 30,
-            cellWidth: 30,
-            cellHeight: 30,
-            height: null,
-            width: null
-        };
-
-        this.data.height = this.data.rows * this.data.cellHeight;
-        this.data.width = this.data.columns * this.data.cellWidth;
-    }
-
-    _createClass(Config, [{
-        key: 'get',
-        value: function get(name) {
-            return this.data[name];
-        }
-    }, {
-        key: 'set',
-        value: function set(name, value) {
-            this.data[name] = value;
-        }
-    }]);
-
-    return Config;
-})();
-
-exports.Config = Config;
-
-},{}],54:[function(require,module,exports){
+},{"../misc/number.prototype.js":64,"./lobby/lobby.module":58,"angular":2,"jquery":3}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45281,7 +45235,7 @@ var Draw = (function () {
 
 exports.Draw = Draw;
 
-},{}],55:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45300,7 +45254,7 @@ var Form = function Form() {
 
 exports.Form = Form;
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45383,7 +45337,7 @@ var Game = (function () {
 
 exports.Game = Game;
 
-},{"../draw/draw.class.js":54}],57:[function(require,module,exports){
+},{"../draw/draw.class.js":53}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45423,7 +45377,7 @@ var Images = (function () {
 
 exports.Images = Images;
 
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45585,7 +45539,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":64}],59:[function(require,module,exports){
+},{"../form/form.class.js":54,"../message/message.class.js":59,"../notify/notify.class.js":60,"../player/player.class.js":61,"../room/room.class.js":62,"../socket/socket.class.js":63}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45598,7 +45552,7 @@ var ctrl = _lobbyCtrlJs.LobbyCtrl;
 
 exports.ctrl = ctrl;
 
-},{"./lobby.ctrl.js":58}],60:[function(require,module,exports){
+},{"./lobby.ctrl.js":57}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45617,7 +45571,7 @@ var Message = function Message(object) {
 
 exports.Message = Message;
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45655,7 +45609,7 @@ var Notify = function Notify(object) {
 
 exports.Notify = Notify;
 
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45676,7 +45630,7 @@ var Player = function Player(object) {
 
 exports.Player = Player;
 
-},{"../../shared/ship/ship.class.js":66}],63:[function(require,module,exports){
+},{"../../shared/ship/ship.class.js":66}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45693,7 +45647,7 @@ var _playerPlayerClassJs = require('../player/player.class.js');
 
 var _imagesImagesClassJs = require('../images/images.class.js');
 
-var _configConfigClassJs = require('../config/config.class.js');
+var _sharedConfigConfigClassJs = require('../../shared/config/config.class.js');
 
 var Room = (function () {
     function Room() {
@@ -45703,7 +45657,7 @@ var Room = (function () {
         this.master = null;
         this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
-        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config());
+        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _sharedConfigConfigClassJs.Config());
     }
 
     _createClass(Room, [{
@@ -45728,7 +45682,7 @@ var Room = (function () {
 
 exports.Room = Room;
 
-},{"../config/config.class.js":53,"../game/game.class.js":56,"../images/images.class.js":57,"../player/player.class.js":62}],64:[function(require,module,exports){
+},{"../../shared/config/config.class.js":65,"../game/game.class.js":55,"../images/images.class.js":56,"../player/player.class.js":61}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45759,7 +45713,7 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],65:[function(require,module,exports){
+},{"socket.io-client":4}],64:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45771,6 +45725,52 @@ Number.prototype["in"] = function (array) {
 
 exports["default"] = Number;
 module.exports = exports["default"];
+
+},{}],65:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Config = (function () {
+    function Config() {
+        _classCallCheck(this, Config);
+
+        this.data = {
+            rows: 15,
+            columns: 30,
+            grid_size: 30,
+            cellWidth: 30,
+            cellHeight: 30,
+            height: null,
+            width: null
+        };
+
+        this.data.height = this.data.rows * this.data.cellHeight;
+        this.data.width = this.data.columns * this.data.cellWidth;
+    }
+
+    _createClass(Config, [{
+        key: 'get',
+        value: function get(name) {
+            return this.data[name];
+        }
+    }, {
+        key: 'set',
+        value: function set(name, value) {
+            this.data[name] = value;
+        }
+    }]);
+
+    return Config;
+})();
+
+exports.Config = Config;
 
 },{}],66:[function(require,module,exports){
 'use strict';
