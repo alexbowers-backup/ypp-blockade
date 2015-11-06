@@ -19,7 +19,8 @@ class LobbyCtrl {
 
         this.socket.on('connected user', (user) => {
             this.$rootScope.$apply(() => {
-                this.Room.users.push(user);
+                var player = new Player({name: user});
+                this.Room.users.push(player);
                 new Notify({
                     title: 'New player joined',
                     body: user + ' has joined the game'
@@ -38,7 +39,6 @@ class LobbyCtrl {
         });
 
         this.socket.on('disconnected user', function (data) {
-            console.log('Disconnected User 1');
         });
     }
 
@@ -58,7 +58,11 @@ class LobbyCtrl {
 
         this.LoginForm.messages = [];
 
-        this.socket.emit('create', this.LoginForm.fields.username);
+        var player = new Player({
+            name: this.LoginForm.fields.username
+        });
+
+        this.socket.emit('create', player);
 
         this.socket.on('login error', (response) => {
             this.$rootScope.$apply(() => {
@@ -71,11 +75,8 @@ class LobbyCtrl {
             this.$rootScope.$apply(() => {
                 this.Room.id = data.gameID;
                 this.Room.users = data.users;
-                this.Room.master = data.users[0];
-
-                this.Room.Player = new Player({
-                    name: data.user
-                });
+                this.Room.master = data.users[0].name;
+                this.Room.Player = data.user;
 
                 this.$location.search('game', data.gameID);
 
@@ -108,7 +109,7 @@ class LobbyCtrl {
             this.$rootScope.$apply(() => {
                 this.Room.id = data.gameID;
                 this.Room.users = data.users;
-                this.Room.master = data.users[0];
+                this.Room.master = data.users[0].name;
 
                 this.Room.Player = new Player({
                     name: data.user

@@ -45133,7 +45133,7 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"../misc/number.prototype.js":65,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"../misc/number.prototype.js":66,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45160,8 +45160,6 @@ var Config = (function () {
 
         this.data.height = this.data.rows * this.data.cellHeight;
         this.data.width = this.data.columns * this.data.cellWidth;
-
-        console.log(this.data);
     }
 
     _createClass(Config, [{
@@ -45246,9 +45244,17 @@ var Draw = (function () {
             }
         }
     }, {
+        key: 'ships',
+        value: function ships(users) {
+            angular.forEach(users, function (user, key) {
+                this.ship(user.vessel);
+            });
+        }
+    }, {
         key: 'ship',
-        value: function ship() {
+        value: function ship(vessel) {
             this.context.save();
+            this.context.translate(vessel.x, vessel.y);
             this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
             this.context.restore();
         }
@@ -45292,12 +45298,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _drawDrawClassJs = require('../draw/draw.class.js');
 
 var Game = (function () {
-    function Game(images, config) {
+    function Game(images, config, users) {
         _classCallCheck(this, Game);
 
         this.started = false;
         this.Images = images;
         this.Config = config;
+        this.users = users;
         this.Images.set('safe-zone', 'safezone');
         this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
@@ -45334,7 +45341,7 @@ var Game = (function () {
         value: function update() {
             this.Draw.zones();
             this.Draw.outline();
-            this.Draw.ship();
+            this.Draw.ships(this.users);
         }
     }, {
         key: 'loop',
@@ -45433,7 +45440,8 @@ var LobbyCtrl = (function () {
 
         this.socket.on('connected user', function (user) {
             _this.$rootScope.$apply(function () {
-                _this.Room.users.push(user);
+                var player = new _playerPlayerClassJs.Player({ name: user });
+                _this.Room.users.push(player);
                 new _notifyNotifyClassJs.Notify({
                     title: 'New player joined',
                     body: user + ' has joined the game'
@@ -45451,9 +45459,7 @@ var LobbyCtrl = (function () {
             });
         });
 
-        this.socket.on('disconnected user', function (data) {
-            console.log('Disconnected User 1');
-        });
+        this.socket.on('disconnected user', function (data) {});
     }
 
     _createClass(LobbyCtrl, [{
@@ -45477,7 +45483,11 @@ var LobbyCtrl = (function () {
 
             this.LoginForm.messages = [];
 
-            this.socket.emit('create', this.LoginForm.fields.username);
+            var player = new _playerPlayerClassJs.Player({
+                name: this.LoginForm.fields.username
+            });
+
+            this.socket.emit('create', player);
 
             this.socket.on('login error', function (response) {
                 _this2.$rootScope.$apply(function () {
@@ -45490,11 +45500,8 @@ var LobbyCtrl = (function () {
                 _this2.$rootScope.$apply(function () {
                     _this2.Room.id = data.gameID;
                     _this2.Room.users = data.users;
-                    _this2.Room.master = data.users[0];
-
-                    _this2.Room.Player = new _playerPlayerClassJs.Player({
-                        name: data.user
-                    });
+                    _this2.Room.master = data.users[0].name;
+                    _this2.Room.Player = data.user;
 
                     _this2.$location.search('game', data.gameID);
 
@@ -45530,7 +45537,7 @@ var LobbyCtrl = (function () {
                 _this3.$rootScope.$apply(function () {
                     _this3.Room.id = data.gameID;
                     _this3.Room.users = data.users;
-                    _this3.Room.master = data.users[0];
+                    _this3.Room.master = data.users[0].name;
 
                     _this3.Room.Player = new _playerPlayerClassJs.Player({
                         name: data.user
@@ -45552,7 +45559,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":64}],59:[function(require,module,exports){
+},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":65}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45623,24 +45630,27 @@ var Notify = function Notify(object) {
 exports.Notify = Notify;
 
 },{}],62:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _shipShipClassJs = require('../ship/ship.class.js');
 
 var Player = function Player(object) {
     _classCallCheck(this, Player);
 
     object = object || {};
     this.name = object.name || null;
+    this.vessel = new _shipShipClassJs.Ship();
 };
 
 exports.Player = Player;
 
-},{}],63:[function(require,module,exports){
+},{"../ship/ship.class.js":64}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45667,7 +45677,7 @@ var Room = (function () {
         this.master = null;
         this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
-        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config());
+        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config(), this.users);
     }
 
     _createClass(Room, [{
@@ -45699,6 +45709,25 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Ship = function Ship() {
+    _classCallCheck(this, Ship);
+
+    this.x = 0;
+    this.y = 0;
+    this.type = 'owner';
+};
+
+exports.Ship = Ship;
+
+},{}],65:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -45723,7 +45752,7 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],65:[function(require,module,exports){
+},{"socket.io-client":4}],66:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

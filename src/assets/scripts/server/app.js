@@ -17,8 +17,8 @@ app.use(express.static(__dirname + '/../../../../public'));
 io.rooms = {};
 io.sockets.on('connection', function (client) {
     var room;
-    client.on('create', function (username) {
-        if (!User.validate(username)) {
+    client.on('create', function (player) {
+        if (!User.validate(player.name)) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'Your username is not valid'
@@ -28,7 +28,7 @@ io.sockets.on('connection', function (client) {
 
             io.rooms[client.gameID] = room = {users: []};
 
-            Game.joinRoom(client, client.gameID, username, room);
+            Game.joinRoom(client, client.gameID, player, room);
         }
     });
 

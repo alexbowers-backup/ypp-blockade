@@ -1,10 +1,11 @@
 import { Draw } from '../draw/draw.class.js';
 
 class Game {
-    constructor(images, config) {
+    constructor(images, config, users) {
         this.started = false;
         this.Images = images;
         this.Config = config;
+        this.users = users;
         this.Images.set('safe-zone', 'safezone');
         this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
@@ -36,7 +37,7 @@ class Game {
     update() {
         this.Draw.zones();
         this.Draw.outline();
-        this.Draw.ship();
+        this.Draw.ships(this.users);
     }
 
     loop() {

@@ -22,8 +22,7 @@ class GameCtrl {
         room.users.splice(room.users.indexOf(client.username), 1);
     }
 
-    joinRoom(client, gameID, username, room) {
-
+    joinRoom(client, gameID, player, room) {
         if (room === undefined) {
             client.emit('login error', {
                 type: 'danger',
@@ -45,7 +44,7 @@ class GameCtrl {
             return false;
         }
 
-        if (!/^(?=.{4,12}$)[A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*$/.test(username) || username === null || username === undefined) {
+        if (!/^(?=.{4,12}$)[A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*$/.test(player.name) || player.name === null || player.name === undefined) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'Your username is not valid'
@@ -56,7 +55,7 @@ class GameCtrl {
             return false;
         }
 
-        if (room.users.indexOf(username) !== -1) {
+        if (room.users.indexOf(player.name) !== -1) {
             client.emit('login error', {
                 type: 'danger',
                 text: 'This username is already taken'
@@ -76,11 +75,11 @@ class GameCtrl {
             return false;
         }
 
-        room.users.push(username);
+        room.users.push(player);
 
         client.emit('login', {
             gameID: gameID,
-            user: username,
+            user: player,
             users: room.users
         });
 

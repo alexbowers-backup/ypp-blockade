@@ -14,8 +14,6 @@ class Config {
 
         this.data.height = this.data.rows * this.data.cellHeight;
         this.data.width = this.data.columns * this.data.cellWidth;
-
-        console.log(this.data);
     }
 
     get(name) {
