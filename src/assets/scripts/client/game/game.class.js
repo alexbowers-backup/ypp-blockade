@@ -16,6 +16,7 @@ class Game {
         this.Images.set('wind-right', 'wind-right');
         this.Images.set('wind-up', 'wind-up');
         this.Images.set('wind-down', 'wind-down');
+
     }
 
     init() {
@@ -34,6 +35,7 @@ class Game {
 
     update() {
         this.Draw.zones();
+        this.Draw.outline();
     }
 
     loop() {

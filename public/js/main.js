@@ -45151,8 +45151,17 @@ var Config = (function () {
         this.data = {
             rows: 15,
             columns: 30,
-            grid_size: 30
+            grid_size: 30,
+            cellWidth: 30,
+            cellHeight: 30,
+            height: null,
+            width: null
         };
+
+        this.data.height = this.data.rows * this.data.cellHeight;
+        this.data.width = this.data.columns * this.data.cellWidth;
+
+        console.log(this.data);
     }
 
     _createClass(Config, [{
@@ -45235,6 +45244,23 @@ var Draw = (function () {
 
             return 'open-sea';
         }
+    }, {
+        key: 'outline',
+        value: function outline() {
+            for (var i = 1; i < this.Config.get('columns'); i++) {
+                this.context.beginPath();
+                this.context.moveTo(i * this.Config.get('cellWidth'), 0);
+                this.context.lineTo(i * this.Config.get('cellWidth'), this.Config.get('height'));
+                this.context.stroke();
+            }
+
+            for (var i = 1; i < this.Config.get('rows'); i++) {
+                this.context.beginPath();
+                this.context.moveTo(0, i * this.Config.get('cellHeight'));
+                this.context.lineTo(this.Config.get('width'), i * this.Config.get('cellHeight'));
+                this.context.stroke();
+            }
+        }
     }]);
 
     return Draw;
@@ -45315,6 +45341,7 @@ var Game = (function () {
         key: 'update',
         value: function update() {
             this.Draw.zones();
+            this.Draw.outline();
         }
     }, {
         key: 'loop',

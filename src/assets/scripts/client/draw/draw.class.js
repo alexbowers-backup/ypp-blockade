@@ -91,6 +91,22 @@ class Draw {
 
         return 'open-sea';
     }
+
+    outline() {
+        for(var i = 1; i < this.Config.get('columns'); i++) {
+            this.context.beginPath();
+            this.context.moveTo(i * this.Config.get('cellWidth'), 0);
+            this.context.lineTo(i * this.Config.get('cellWidth'), this.Config.get('height'));
+            this.context.stroke();
+        }
+
+        for(var i = 1; i < this.Config.get('rows'); i++) {
+            this.context.beginPath();
+            this.context.moveTo(0, i * this.Config.get('cellHeight'));
+            this.context.lineTo(this.Config.get('width'), i * this.Config.get('cellHeight'));
+            this.context.stroke();
+        }
+    }
 }
 
 export { Draw };
