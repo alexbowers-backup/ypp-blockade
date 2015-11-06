@@ -45248,7 +45248,6 @@ var Draw = (function () {
         value: function ships(users) {
             var _this = this;
 
-            console.log(users);
             angular.forEach(users, function (user) {
                 _this.ship(user.vessel);
             });

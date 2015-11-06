@@ -49,7 +49,6 @@ class Draw {
     }
 
     ships(users) {
-        console.log(users);
         angular.forEach(users, (user) => {
             this.ship(user.vessel);
         });
