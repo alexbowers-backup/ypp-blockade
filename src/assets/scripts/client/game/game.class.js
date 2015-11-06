@@ -35,7 +35,7 @@ class Game {
 
     update() {
         this.Draw.zones();
-        this.Draw.outline();
+        //this.Draw.outline();
     }
 
     loop() {

@@ -45341,7 +45341,7 @@ var Game = (function () {
         key: 'update',
         value: function update() {
             this.Draw.zones();
-            this.Draw.outline();
+            //this.Draw.outline();
         }
     }, {
         key: 'loop',
