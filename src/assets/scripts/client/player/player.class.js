@@ -1,4 +1,4 @@
-import { Ship } from '../ship/ship.class.js';
+import { Ship } from '../../shared/ship/ship.class.js';
 
 class Player {
     constructor(object) {

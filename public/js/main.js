@@ -45133,7 +45133,7 @@ _angular2['default'].module('CadeSim', []).config(['$locationProvider', function
 
 window.$ = window.jQuery = _jquery2['default'];
 
-},{"../misc/number.prototype.js":66,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
+},{"../misc/number.prototype.js":65,"./lobby/lobby.module":59,"angular":2,"jquery":3}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45260,6 +45260,20 @@ var Draw = (function () {
             this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
             this.context.restore();
         }
+    }, {
+        key: 'rocks',
+        value: function rocks(_rocks) {
+            var _this2 = this;
+
+            angular.forEach(_rocks, function (rock) {
+                _this2.rock(rock);
+            });
+        }
+    }, {
+        key: 'rock',
+        value: function rock(_rock) {
+            this.context.drawImage(this.Images.get('rock'), _rock.shift * this.Config.get('cellWidth'), 0, this.Config.get('cellWidth'), this.Config.get('cellHeight'), _rock.column * this.Config.get('cellWidth'), _rock.row * this.Config.get('cellHeight'), this.Config.get('cellWidth'), this.Config.get('cellHeight'));
+        }
     }]);
 
     return Draw;
@@ -45318,6 +45332,7 @@ var Game = (function () {
         this.Images.set('wind-up', 'wind-up');
         this.Images.set('wind-down', 'wind-down');
         this.Images.set('ships', 'ships');
+        this.settings = {};
     }
 
     _createClass(Game, [{
@@ -45343,6 +45358,7 @@ var Game = (function () {
             this.Draw.zones();
             this.Draw.outline();
             this.Draw.ships(this.users);
+            this.Draw.rocks(this.settings.rocks);
         }
     }, {
         key: 'loop',
@@ -45569,7 +45585,7 @@ LobbyCtrl.$inject = ['$location', '$rootScope'];
 
 exports.LobbyCtrl = LobbyCtrl;
 
-},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":65}],59:[function(require,module,exports){
+},{"../form/form.class.js":55,"../message/message.class.js":60,"../notify/notify.class.js":61,"../player/player.class.js":62,"../room/room.class.js":63,"../socket/socket.class.js":64}],59:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45648,19 +45664,19 @@ Object.defineProperty(exports, '__esModule', {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _shipShipClassJs = require('../ship/ship.class.js');
+var _sharedShipShipClassJs = require('../../shared/ship/ship.class.js');
 
 var Player = function Player(object) {
     _classCallCheck(this, Player);
 
     object = object || {};
     this.name = object.name || null;
-    this.vessel = new _shipShipClassJs.Ship();
+    this.vessel = new _sharedShipShipClassJs.Ship();
 };
 
 exports.Player = Player;
 
-},{"../ship/ship.class.js":64}],63:[function(require,module,exports){
+},{"../../shared/ship/ship.class.js":66}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45719,25 +45735,6 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var Ship = function Ship() {
-    _classCallCheck(this, Ship);
-
-    this.x = 0;
-    this.y = 0;
-    this.type = 'owner';
-};
-
-exports.Ship = Ship;
-
-},{}],65:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -45762,7 +45759,7 @@ var Socket = function Socket(options) {
 
 exports.Socket = Socket;
 
-},{"socket.io-client":4}],66:[function(require,module,exports){
+},{"socket.io-client":4}],65:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45774,5 +45771,24 @@ Number.prototype["in"] = function (array) {
 
 exports["default"] = Number;
 module.exports = exports["default"];
+
+},{}],66:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Ship = function Ship() {
+    _classCallCheck(this, Ship);
+
+    this.x = 0;
+    this.y = 0;
+    this.type = 'owner';
+};
+
+exports.Ship = Ship;
 
 },{}]},{},[52]);

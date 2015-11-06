@@ -51,4 +51,24 @@ io.sockets.on('connection', function (client) {
             client.broadcast.emit('disconnected user', {user: client.username, users: room.users});
         }
     });
+
+    client.on('start', function() {
+        room.isStarted = true;
+        room.ships = [];
+
+        room.users.forEach(function(user, i) {
+            var team = i % 2 ? 'right' : 'left';
+            var coords = {};
+
+            if (team == 'right') {
+                coords = {x: 0, y: 3};
+            } else if (team == 'left') {
+                coords = {x: 0, y: 3};
+            }
+
+            room.ships.push(new Ship({
+
+            }));
+        });
+    });
 });
