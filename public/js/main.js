@@ -45246,8 +45246,11 @@ var Draw = (function () {
     }, {
         key: 'ships',
         value: function ships(users) {
-            angular.forEach(users, function (user, key) {
-                this.ship(user.vessel);
+            var _this = this;
+
+            console.log(users);
+            angular.forEach(users, function (user) {
+                _this.ship(user.vessel);
             });
         }
     }, {
@@ -45298,13 +45301,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _drawDrawClassJs = require('../draw/draw.class.js');
 
 var Game = (function () {
-    function Game(images, config, users) {
+    function Game(images, config) {
         _classCallCheck(this, Game);
 
         this.started = false;
         this.Images = images;
         this.Config = config;
-        this.users = users;
         this.Images.set('safe-zone', 'safezone');
         this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
@@ -45353,6 +45355,11 @@ var Game = (function () {
             });
 
             this.update();
+        }
+    }, {
+        key: 'updateUsers',
+        value: function updateUsers(users) {
+            this.users = users;
         }
     }]);
 
@@ -45503,6 +45510,8 @@ var LobbyCtrl = (function () {
                     _this2.Room.master = data.users[0].name;
                     _this2.Room.Player = data.user;
 
+                    _this2.Room.Game.updateUsers(_this2.Room.users);
+
                     _this2.$location.search('game', data.gameID);
 
                     _this2.stage = 2;
@@ -45542,6 +45551,8 @@ var LobbyCtrl = (function () {
                     _this3.Room.Player = new _playerPlayerClassJs.Player({
                         name: data.user
                     });
+
+                    _this3.Room.Game.updateUsers(_this3.Room.users);
 
                     _this3.$location.search('game', data.gameID);
 
@@ -45677,7 +45688,7 @@ var Room = (function () {
         this.master = null;
         this.Player = new _playerPlayerClassJs.Player();
         this.id = null;
-        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config(), this.users);
+        this.Game = new _gameGameClassJs.Game(new _imagesImagesClassJs.Images(), new _configConfigClassJs.Config());
     }
 
     _createClass(Room, [{

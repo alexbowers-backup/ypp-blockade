@@ -78,6 +78,8 @@ class LobbyCtrl {
                 this.Room.master = data.users[0].name;
                 this.Room.Player = data.user;
 
+                this.Room.Game.updateUsers(this.Room.users);
+
                 this.$location.search('game', data.gameID);
 
                 this.stage = 2;
@@ -114,6 +116,8 @@ class LobbyCtrl {
                 this.Room.Player = new Player({
                     name: data.user
                 });
+
+                this.Room.Game.updateUsers(this.Room.users);
 
                 this.$location.search('game', data.gameID);
 

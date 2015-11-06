@@ -1,11 +1,10 @@
 import { Draw } from '../draw/draw.class.js';
 
 class Game {
-    constructor(images, config, users) {
+    constructor(images, config) {
         this.started = false;
         this.Images = images;
         this.Config = config;
-        this.users = users;
         this.Images.set('safe-zone', 'safezone');
         this.Images.set('open-sea', 'opensea');
         this.Images.set('rock', 'rock');
@@ -46,6 +45,10 @@ class Game {
         });
 
         this.update();
+    }
+
+    updateUsers(users) {
+        this.users = users;
     }
 }
 

@@ -9,7 +9,7 @@ class Room {
         this.master = null;
         this.Player = new Player();
         this.id = null;
-        this.Game = new Game(new Images(), new Config(), this.users);
+        this.Game = new Game(new Images(), new Config());
     }
 
     isCurrentUserMaster() {

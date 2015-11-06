@@ -49,14 +49,15 @@ class Draw {
     }
 
     ships(users) {
-        angular.forEach(users, function(user, key) {
+        console.log(users);
+        angular.forEach(users, (user) => {
             this.ship(user.vessel);
         });
     }
 
     ship(vessel) {
         this.context.save();
-        this.context.translate(vessel.x, vessel.y)
+        this.context.translate(vessel.x, vessel.y);
         this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
         this.context.restore();
     }
