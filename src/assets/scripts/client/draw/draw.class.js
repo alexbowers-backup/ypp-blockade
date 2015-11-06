@@ -56,9 +56,25 @@ class Draw {
 
     ship(vessel) {
         this.context.save();
-        this.context.translate(vessel.x, vessel.y);
+        this.context.translate(vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'));
         this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
         this.context.restore();
+    }
+
+    rocks(rocks) {
+        angular.forEach(rocks, (rock) => {
+            this.rock(rock);
+        });
+    }
+
+    rock(rock) {
+        this.context.drawImage(
+            this.Images.get('rock'),
+            rock.shift * this.Config.get('cellWidth'), 0,
+            this.Config.get('cellWidth'), this.Config.get('cellHeight'),
+            rock.column * this.Config.get('cellWidth'), rock.row * this.Config.get('cellHeight'),
+            this.Config.get('cellWidth'), this.Config.get('cellHeight')
+        );
     }
 }
 

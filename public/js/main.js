@@ -45256,7 +45256,7 @@ var Draw = (function () {
         key: 'ship',
         value: function ship(vessel) {
             this.context.save();
-            this.context.translate(vessel.x, vessel.y);
+            this.context.translate(vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'));
             this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
             this.context.restore();
         }

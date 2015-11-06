@@ -17,6 +17,7 @@ class Game {
         this.Images.set('wind-up', 'wind-up');
         this.Images.set('wind-down', 'wind-down');
         this.Images.set('ships', 'ships');
+        this.settings = {};
     }
 
     init() {
@@ -37,6 +38,7 @@ class Game {
         this.Draw.zones();
         this.Draw.outline();
         this.Draw.ships(this.users);
+        this.Draw.rocks(this.settings.rocks);
     }
 
     loop() {
