@@ -37,9 +37,6 @@ class LobbyCtrl {
                 });
             });
         });
-
-        this.socket.on('disconnected user', function (data) {
-        });
     }
 
     init() {
@@ -52,7 +49,7 @@ class LobbyCtrl {
     }
 
     createGame() {
-        this.socket = new Socket({forceNew: true});
+        // this.socket = new Socket({forceNew: true});
 
         this.LoginForm.properties.inProgress = true;
 
@@ -89,7 +86,7 @@ class LobbyCtrl {
     }
 
     joinGame() {
-        this.socket = new Socket({forceNew: true});
+        // this.socket = new Socket({forceNew: true});
 
         this.LoginForm.properties.inProgress = true;
 

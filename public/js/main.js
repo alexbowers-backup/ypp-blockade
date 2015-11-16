@@ -45453,7 +45453,7 @@ var LobbyCtrl = (function () {
         value: function createGame() {
             var _this2 = this;
 
-            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
+            // this.socket = new Socket({forceNew: true});
 
             this.LoginForm.properties.inProgress = true;
 
@@ -45493,7 +45493,7 @@ var LobbyCtrl = (function () {
         value: function joinGame() {
             var _this3 = this;
 
-            this.socket = new _socketSocketClassJs.Socket({ forceNew: true });
+            // this.socket = new Socket({forceNew: true});
 
             this.LoginForm.properties.inProgress = true;
 
