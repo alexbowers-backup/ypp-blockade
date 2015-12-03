@@ -29,9 +29,9 @@ class Game {
 
         this.Draw = new Draw(this.canvas.getContext('2d'), this.Images, this.Config);
 
-        window.requestAnimationFrame(() => {
-            this.loop()
-        });
+        //window.requestAnimationFrame(() => {
+            this.loop();
+        //});
     }
 
     update() {
@@ -42,9 +42,9 @@ class Game {
     }
 
     loop() {
-        window.requestAnimationFrame(() => {
-            this.loop();
-        });
+        //window.requestAnimationFrame(() => {
+        //    this.loop();
+        //});
 
         this.update();
     }

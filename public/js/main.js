@@ -45210,8 +45210,7 @@ var Draw = (function () {
         key: 'ship',
         value: function ship(vessel) {
             this.context.save();
-            this.context.translate(vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'));
-            this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
+            this.context.drawImage(this.Images.get('ships'), 0, 0, this.Config.get('cellWidth'), this.Config.get('cellWidth'), vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'), this.Config.get('cellWidth'), this.Config.get('cellHeight'));
             this.context.restore();
         }
     }, {
@@ -45292,8 +45291,6 @@ var Game = (function () {
     _createClass(Game, [{
         key: 'init',
         value: function init() {
-            var _this = this;
-
             this.canvas_wrapper = document.getElementById('game-wrapper');
             this.canvas = document.getElementById('game');
 
@@ -45302,9 +45299,9 @@ var Game = (function () {
 
             this.Draw = new _drawDrawClassJs.Draw(this.canvas.getContext('2d'), this.Images, this.Config);
 
-            window.requestAnimationFrame(function () {
-                _this.loop();
-            });
+            //window.requestAnimationFrame(() => {
+            this.loop();
+            //});
         }
     }, {
         key: 'update',
@@ -45317,11 +45314,9 @@ var Game = (function () {
     }, {
         key: 'loop',
         value: function loop() {
-            var _this2 = this;
-
-            window.requestAnimationFrame(function () {
-                _this2.loop();
-            });
+            //window.requestAnimationFrame(() => {
+            //    this.loop();
+            //});
 
             this.update();
         }

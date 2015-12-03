@@ -31,7 +31,7 @@ class Draw {
     }
 
     outline() {
-        for(var i = 1; i < this.Config.get('columns'); i++) {
+        for (var i = 1; i < this.Config.get('columns'); i++) {
             this.context.beginPath();
             this.context.moveTo(i * this.Config.get('cellWidth'), 0);
             this.context.lineTo(i * this.Config.get('cellWidth'), this.Config.get('height'));
@@ -39,7 +39,7 @@ class Draw {
             this.context.stroke();
         }
 
-        for(var i = 1; i < this.Config.get('rows'); i++) {
+        for (var i = 1; i < this.Config.get('rows'); i++) {
             this.context.beginPath();
             this.context.moveTo(0, i * this.Config.get('cellHeight'));
             this.context.lineTo(this.Config.get('width'), i * this.Config.get('cellHeight'));
@@ -56,8 +56,13 @@ class Draw {
 
     ship(vessel) {
         this.context.save();
-        this.context.translate(vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'));
-        this.context.drawImage(this.Images.get('ships'), 0, 0, 30, 30, 0, 0, 30, 30);
+        this.context.drawImage(
+            this.Images.get('ships'),
+            0, 0,
+            this.Config.get('cellWidth'), this.Config.get('cellWidth'),
+            vessel.x * this.Config.get('cellWidth'), vessel.y * this.Config.get('cellHeight'),
+            this.Config.get('cellWidth'), this.Config.get('cellHeight')
+        );
         this.context.restore();
     }
 
