@@ -29,6 +29,9 @@ io.sockets.on('connection', function (client) {
             io.rooms[client.gameID] = room = {users: []};
 
             Game.joinRoom(client, client.gameID, player, room);
+
+            // join client to the room
+            client.join(client.gameID);
         }
     });
 
@@ -38,8 +41,11 @@ io.sockets.on('connection', function (client) {
 
         var test = Game.joinRoom(client, data.gameID, data.username, room);
         if (test) {
-            client.broadcast.emit('connected user', data.username);
             client.username = data.username;
+            client.gameID = data.gameID;
+            // join client to the room
+            client.join(client.gameID);
+            client.broadcast.to(client.gameID).emit('connected user', data.username);
         } else {
             client.disconnect();
         }
@@ -48,7 +54,7 @@ io.sockets.on('connection', function (client) {
     client.on('disconnect', function () {
         if (client.username) {
             Game.leaveRoom(client, room);
-            client.broadcast.emit('disconnected user', {user: client.username, users: room.users});
+            client.broadcast.to(client.gameID).emit('disconnected user', {user: client.username, users: room.users});
         }
     });
 
