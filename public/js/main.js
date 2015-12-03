@@ -45429,8 +45429,6 @@ var LobbyCtrl = (function () {
                 });
             });
         });
-
-        this.socket.on('disconnected user', function (data) {});
     }
 
     _createClass(LobbyCtrl, [{
