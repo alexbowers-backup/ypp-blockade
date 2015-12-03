@@ -40,7 +40,6 @@ class GameCtrl {
             });
 
             client.disconnect();
-
             return false;
         }
 
@@ -51,7 +50,6 @@ class GameCtrl {
             });
 
             client.disconnect();
-
             return false;
         }
 
